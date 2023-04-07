@@ -25,5 +25,4 @@ public class DNode<T> {
     public void setNext(DNode<T> next){
         this.next = next;
     }
-
 }
