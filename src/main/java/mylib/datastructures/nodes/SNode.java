@@ -11,6 +11,9 @@ public class SNode<T> {
     public T getData(){
         return this.data;
     }
+    public void setData(T data) {
+        this.data = data;
+    }
     public SNode<T> getNext(){
         return this.next;
     }

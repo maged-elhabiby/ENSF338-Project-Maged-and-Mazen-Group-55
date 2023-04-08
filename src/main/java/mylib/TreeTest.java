@@ -2,7 +2,6 @@ package main.java.mylib;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertNull;
 
 import main.java.mylib.datastructures.nodes.TNode;
 import main.java.mylib.datastructures.tree.AVL;
@@ -57,15 +56,17 @@ public class TreeTest {
         assertNotNull(node1);
         assertNull(node2);
 
-        /*
+        
         // Test printInOrder
-        String expectedInOrder = "2 3 4 5 6 7 8 ";
-        assertEquals(expectedInOrder, bst.printInOrder());
+        //String expectedInOrder = "2 3 4 5 6 7 8 ";
+        //assertEquals(expectedInOrder, bst.printInOrder());
+        //assertNotNull(bst.printInOrder());
+
 
         // Test printBF
-        String expectedBF = "5 \n3 7 \n2 4 6 8 \n";
-        assertEquals(expectedBF, bst.printBF());
-        */
+        //String expectedBF = "5 \n3 7 \n2 4 6 8 \n";
+        //assertEquals(expectedBF, bst.printBF());
+        
         // Test delete
         bst.delete(7);
         TNode node3 = bst.search(7);
@@ -96,7 +97,7 @@ public class TreeTest {
 
         // Test printBF
         String expectedBF = "5 \n3 7 \n2 4 6 8 \n";
-        //assertEquals(expectedBF, avl.printBF());
+       // assertEquals(expectedBF, avl.printBF());
 
         // Test delete
         avl.delete(7);
