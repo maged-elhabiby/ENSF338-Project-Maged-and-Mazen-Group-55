@@ -1,0 +1,33 @@
+public class SinglyLLTest {
+    @Test
+    public void testInsertHead() {
+        SinglyLL list = new SLL();
+        Node node = new Node(1);
+        list.insertHead(node);
+        assertEquals(node, list.getHead());
+    }
+
+    @Test
+    public void testInsertTail() {
+        SinglyLL list = new SLL();
+        Node node1 = new Node(1);
+        Node node2 = new Node(2);
+        list.insertHead(node1);
+        list.insertTail(node2);
+        assertEquals(node2, list.getTail());
+    }
+
+    @Test
+    public void testInsertAtPosition() {
+        SinglyLL list = new SLL();
+        Node node1 = new Node(1);
+        Node node2 = new Node(2);
+        Node node3 = new Node(3);
+        list.insertHead(node1);
+        list.insertTail(node3);
+        list.insert(node2, 2);
+        assertEquals(node2, list.getNodeAt(2));
+    }
+
+    // Add more test cases for other methods...
+}
