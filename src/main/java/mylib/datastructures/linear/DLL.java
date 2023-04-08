@@ -1,4 +1,7 @@
-package main.java.mylib.datastructures.nodes;
+package main.java.mylib.datastructures.linear;
+
+import main.java.mylib.datastructures.nodes.DNode;
+import main.java.mylib.datastructures.nodes.SNode;
 
 public class DLL <T extends Comparable<T>> extends SLL<T> {
     private DNode<T> head;

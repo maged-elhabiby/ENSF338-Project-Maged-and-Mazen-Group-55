@@ -1,4 +1,6 @@
-package main.java.mylib.datastructures.nodes;
+package main.java.mylib.datastructures.linear;
+
+import main.java.mylib.datastructures.nodes.SNode;
 
 public class SLL<T extends Comparable<T>>{
     private SNode<T> head;
