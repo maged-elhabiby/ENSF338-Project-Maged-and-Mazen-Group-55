@@ -18,6 +18,10 @@ public class SLL<T extends Comparable<T>>{
         this.tail = head;
         this.size = 1;
     }
+
+    public SNode<T> getHead(){
+        return this.head;
+    }
     public void insertHead(SNode<T> node){
         if(isEmpty()){
             this.head = node;
