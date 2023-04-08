@@ -1,97 +1,77 @@
 package main.java.mylib.datastructures.linear;
 
+import java.util.Comparator;
+
 import main.java.mylib.datastructures.nodes.SNode;
 
-public class SLL<T extends Comparable<T>>{
+public class SLL<T> {
     private SNode<T> head;
     private SNode<T> tail;
     private int size;
+    private Comparator<T> comparator;
 
-    
-    public SLL(){
+    public SLL() {
         this.head = null;
         this.tail = null;
         this.size = 0;
+        this.comparator = null;
     }
-    public SLL(SNode<T> head){
-        this.head = head;
-        this.tail = head;
+
+    public SLL(Comparator<T> comparator) {
+        this();
+        this.comparator = comparator;
+    }
+
+    public SLL(SNode<T> node) {
+        this.head = node;
+        this.tail = node;
         this.size = 1;
+        this.comparator = null;
     }
 
-    public SNode<T> getHead(){
-        return this.head;
-    }
-    public void insertHead(SNode<T> node){
-        if(isEmpty()){
-            this.head = node;
-            this.tail = node;
-        } else {
-            node.setNext(this.head);
-            this.head = node;
-        }
-        this.size++;
-    }
-    public void insertTail(SNode<T> node){
-        if(isEmpty()){
-            this.head = node;
-            this.tail = node;
-        } else {
-            this.tail.setNext(node);
-            this.tail = node;
-        }
-        this.size++;
-    }
-    public boolean isEmpty() {
-        return size == 0;
+    public SLL(SNode<T> node, Comparator<T> comparator) {
+        this(node);
+        this.comparator = comparator;
     }
 
-    public void insert(SNode<T> node, int position){
-        if(position < 0 || position > this.size){
+    public SNode<T> getTail() {
+        return tail;
+    }
+    public SNode<T> getHead() {
+        return head;
+    }
+    public void insertHead(SNode<T> node) {
+        if (isEmpty()) {
+            head = tail = node;
+        } else {
+            node.setNext(head);
+            head = node;
+        }
+        size++;
+    }
+
+    public void insertTail(SNode<T> node) {
+        if (isEmpty()) {
+            head = tail = node;
+        } else {
+            tail.setNext(node);
+            tail = node;
+        }
+        size++;
+    }
+
+    public void insert(SNode<T> node, int position) {
+        if (position < 0 || position > size) {
             throw new IndexOutOfBoundsException("Invalid position");
         }
-        if(position == 0){
-            this.insertHead(node);
-        } else if(position == this.size){
-            this.insertTail(node);
-        } else {
-            SNode<T> current = this.head;
-            for(int i = 0; i < position - 1; i++){
-                current = current.getNext();
-            }
-            node.setNext(current.getNext());
-            current.setNext(node);
-            this.size++;
-        }
-    }
-    public boolean isSorted(){
 
-        if(isEmpty()){
-            return true;
-        }
-
-        SNode<T> current = this.head;
-        while(current.getNext() != null){
-            if(current.getData().compareTo(current.getNext().getData()) > 0){
-                return false;
-            }
-            current = current.getNext();
-        }
-        return true;
-    }
-
-    public void sortedInsert(SNode<T> node) {
-        if (!isSorted()) {
-            sort();
-        }
-
-        if (isEmpty() || node.getData().compareTo(head.getData()) <= 0) {
+        if (position == 0) {
             insertHead(node);
-        } else if (node.getData().compareTo(tail.getData()) >= 0) {
+        } else if (position == size) {
             insertTail(node);
         } else {
             SNode<T> current = head;
-            while (current.getNext() != null && current.getNext().getData().compareTo(node.getData()) < 0) {
+            for (int i = 1; i < position; i++) {
                 current = current.getNext();
             }
             node.setNext(current.getNext());
@@ -99,6 +79,32 @@ public class SLL<T extends Comparable<T>>{
             size++;
         }
     }
+
+    public void sortedInsert(SNode<T> node) {
+        if (comparator == null) {
+            throw new IllegalStateException("Comparator not set");
+        }
+
+        if (!isSorted()) {
+            sort();
+        }
+
+        if (isEmpty() || comparator.compare(node.getData(), head.getData()) < 0) {
+            insertHead(node);
+        } else {
+            SNode<T> current = head;
+            while (current.getNext() != null && comparator.compare(node.getData(), current.getNext().getData()) > 0) {
+                current = current.getNext();
+            }
+            node.setNext(current.getNext());
+            current.setNext(node);
+            if (current == tail) {
+                tail = node;
+            }
+            size++;
+        }
+    }
+
     public SNode<T> search(T data) {
         SNode<T> current = head;
         while (current != null) {
@@ -114,102 +120,116 @@ public class SLL<T extends Comparable<T>>{
         if (isEmpty()) {
             throw new IllegalStateException("List is empty");
         }
+
         head = head.getNext();
-        size--;
-        if (isEmpty()) {
+        if (head == null) {
             tail = null;
         }
+        size--;
     }
+
     public void deleteTail() {
         if (isEmpty()) {
             throw new IllegalStateException("List is empty");
         }
-    
-        if (size == 1) {
-            head = null;
-            tail = null;
+
+        if (head == tail) {
+            head = tail = null;
         } else {
             SNode<T> current = head;
             while (current.getNext() != tail) {
                 current = current.getNext();
             }
-            current.setNext(null);
             tail = current;
+            tail.setNext(null);
         }
         size--;
     }
-    public void delete(SNode<T> node) {
+
+    public void delete(T data) {
         if (isEmpty()) {
             throw new IllegalStateException("List is empty");
         }
-    
-        if (head == node) {
+        if (head.getData().equals(data)) {
             deleteHead();
-        } else if (tail == node) {
-            deleteTail();
         } else {
             SNode<T> current = head;
-            while (current.getNext() != null && current.getNext() != node) {
+            while (current.getNext() != null && !current.getNext().getData().equals(data)) {
                 current = current.getNext();
             }
     
             if (current.getNext() != null) {
+                if (current.getNext() == tail) {
+                    tail = current;
+                }
                 current.setNext(current.getNext().getNext());
                 size--;
             }
         }
     }
-    public void sort(){
-        if(isEmpty()){
+    
+    public void sort() {
+        if (comparator == null) {
+            throw new IllegalStateException("Comparator not set");
+        }
+    
+        if (size <= 1) {
             return;
         }
-        SNode<T> current = this.head;
-        SNode<T> sortedList = null;
-        
-        while(current != null){
-            SNode<T> next = current.getNext();
-            if(sortedList == null || current.getData().compareTo(sortedList.getData()) < 0){
-                current.setNext(sortedList);
-                sortedList = current;
-            } else {
-                SNode<T> sortedCurrent = sortedList;
-                while(sortedCurrent.getNext() != null && current.getData().compareTo(sortedCurrent.getNext().getData()) > 0){
-                    sortedCurrent = sortedCurrent.getNext();
-                }
-                current.setNext(sortedCurrent.getNext());
-                sortedCurrent.setNext(current);
-            }
-            current = next;
-            
-        }
-        this.head = sortedList;
-
-        //update the tail reference
-        SNode<T> tail = this.head;
-        while(tail.getNext() != null){
-            tail = tail.getNext();
-        }
-        this.tail = tail;
-    }
-    public void clear(){
-        this.head = null;
-        this.tail = null;
-        this.size = 0;
-    }
-
-    public void print() {
-        System.out.println("List length: " + size);
-        System.out.println("Sorted status: " + (isSorted() ? "sorted" : "not sorted"));
     
-        System.out.print("List content: ");
         SNode<T> current = head;
         while (current != null) {
-            System.out.print(current.getData());
-            if (current.getNext() != null) {
-                System.out.print(" -> ");
+            SNode<T> next = current.getNext();
+            while (next != null) {
+                if (comparator.compare(current.getData(), next.getData()) > 0) {
+                    T temp = current.getData();
+                    current.setData(next.getData());
+                    next.setData(temp);
+                }
+                next = next.getNext();
             }
+            current = current.getNext();
+        }
+    }
+    
+    public void clear() {
+        head = tail = null;
+        size = 0;
+    }
+    
+    public void print() {
+        System.out.println("List length: " + size);
+        System.out.println("Sorted status: " + (isSorted() ? "Sorted" : "Unsorted"));
+        System.out.print("List content: ");
+    
+        SNode<T> current = head;
+        while (current != null) {
+            System.out.print(current.getData() + (current.getNext() != null ? " -> " : ""));
             current = current.getNext();
         }
         System.out.println();
     }
-}
+    
+    public boolean isEmpty() {
+        return head == null;
+    }
+    
+    public boolean isSorted() {
+        if (comparator == null) {
+            throw new IllegalStateException("Comparator not set");
+        }
+    
+        SNode<T> current = head;
+        while (current != null && current.getNext() != null) {
+            if (comparator.compare(current.getData(), current.getNext().getData()) > 0) {
+                return false;
+            }
+            current = current.getNext();
+        }
+        return true;
+    }
+    
+    public int getSize() {
+        return size;
+    }
+}    
