@@ -41,6 +41,7 @@ public class SLL<T extends Comparable<T>>{
             this.tail = node;
         }
         this.size++;
+        
     }
     public boolean isEmpty() {
         return size == 0;
