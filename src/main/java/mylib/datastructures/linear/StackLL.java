@@ -16,5 +16,18 @@ public class StackLL <T extends Comparable<T>> extends SLL{
         return node;
     }
 
-    
+    public SNode<T> peek(){
+        return super.getHead();
+    }
+
+    @Override
+    public void insertTail(SNode<T> node){}
+
+    public boolean isEmpty(){
+        return super.isEmpty();
+    }
+
+    public void clear(){
+        super.clear();
+    }
 }
