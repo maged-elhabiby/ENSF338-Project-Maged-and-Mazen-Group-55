@@ -11,7 +11,7 @@ public class DLL <T extends Comparable<T>> extends SLL<T> {
         this.tail = null;
     }
     public DLL(DNode<T> head){
-        super(head);
+        //super(head);
         this.head = head;
         this.tail = head;
     }
