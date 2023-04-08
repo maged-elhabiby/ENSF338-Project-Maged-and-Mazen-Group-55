@@ -72,4 +72,8 @@ public class TNode {
     public String toString(){
         return String.valueOf(this.data);
     }
+
+    public int getHeight() {
+        return 0;
+    }
 }
