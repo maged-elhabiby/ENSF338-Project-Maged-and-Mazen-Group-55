@@ -1,48 +1,52 @@
 package main.java.mylib.datastructures.linear;
 
-import java.util.Comparator;
-
 import main.java.mylib.datastructures.nodes.SNode;
 
-public class SLL<T> {
-    private SNode<T> head;
-    private SNode<T> tail;
+public class SLL {
+    private SNode head;
+    private SNode tail;
     private int size;
-    private Comparator<T> comparator;
 
     public SLL() {
         this.head = null;
         this.tail = null;
         this.size = 0;
-        this.comparator = null;
     }
 
-    public SLL(Comparator<T> comparator) {
-        this();
-        this.comparator = comparator;
-    }
-
-    public SLL(SNode<T> node) {
-        this.head = node;
-        this.tail = node;
+    public SLL(SNode head) {
+        this.head = head;
+        this.tail = head;
         this.size = 1;
-        this.comparator = null;
     }
 
-    public SLL(SNode<T> node, Comparator<T> comparator) {
-        this(node);
-        this.comparator = comparator;
+    // Helper method to check if the list is sorted
+    private boolean isSorted() {
+        if (size <= 1) {
+            return true;
+        }
+        SNode current = head;
+        while (current.getNext() != null) {
+            if (current.getData() > current.getNext().getData()) {
+                return false;
+            }
+            current = current.getNext();
+        }
+        return true;
     }
 
-    public SNode<T> getTail() {
-        return tail;
+    // Helper method to find the previous node of a given node
+    private SNode findPrevious(SNode node) {
+        SNode current = head;
+        while (current != null && current.getNext() != node) {
+            current = current.getNext();
+        }
+        return current;
     }
-    public SNode<T> getHead() {
-        return head;
-    }
-    public void insertHead(SNode<T> node) {
-        if (isEmpty()) {
-            head = tail = node;
+
+    public void insertHead(SNode node) {
+        if (head == null) {
+            head = node;
+            tail = node;
         } else {
             node.setNext(head);
             head = node;
@@ -50,9 +54,10 @@ public class SLL<T> {
         size++;
     }
 
-    public void insertTail(SNode<T> node) {
-        if (isEmpty()) {
-            head = tail = node;
+    public void insertTail(SNode node) {
+        if (tail == null) {
+            head = node;
+            tail = node;
         } else {
             tail.setNext(node);
             tail = node;
@@ -60,18 +65,18 @@ public class SLL<T> {
         size++;
     }
 
-    public void insert(SNode<T> node, int position) {
-        if (position < 0 || position > size) {
-            throw new IndexOutOfBoundsException("Invalid position");
+    public void insert(SNode node, int position) {
+        if (position <= 0 || position > size + 1) {
+            throw new IllegalArgumentException("Invalid position");
         }
 
-        if (position == 0) {
+        if (position == 1) {
             insertHead(node);
-        } else if (position == size) {
+        } else if (position == size + 1) {
             insertTail(node);
         } else {
-            SNode<T> current = head;
-            for (int i = 1; i < position; i++) {
+            SNode current = head;
+            for (int i = 1; i < position - 1; i++) {
                 current = current.getNext();
             }
             node.setNext(current.getNext());
@@ -80,35 +85,28 @@ public class SLL<T> {
         }
     }
 
-    public void sortedInsert(SNode<T> node) {
-        if (comparator == null) {
-            throw new IllegalStateException("Comparator not set");
-        }
-
+    public void sortedInsert(SNode node) {
         if (!isSorted()) {
             sort();
         }
 
-        if (isEmpty() || comparator.compare(node.getData(), head.getData()) < 0) {
+        if (head == null || head.getData() >= node.getData()) {
             insertHead(node);
         } else {
-            SNode<T> current = head;
-            while (current.getNext() != null && comparator.compare(node.getData(), current.getNext().getData()) > 0) {
+            SNode current = head;
+            while (current.getNext() != null && current.getNext().getData() < node.getData()) {
                 current = current.getNext();
             }
             node.setNext(current.getNext());
             current.setNext(node);
-            if (current == tail) {
-                tail = node;
-            }
             size++;
         }
     }
 
-    public SNode<T> search(T data) {
-        SNode<T> current = head;
+    public SNode search(int data) {
+        SNode current = head;
         while (current != null) {
-            if (current.getData().equals(data)) {
+            if (current.getData() == data) {
                 return current;
             }
             current = current.getNext();
@@ -117,119 +115,75 @@ public class SLL<T> {
     }
 
     public void deleteHead() {
-        if (isEmpty()) {
+        if (head == null) {
             throw new IllegalStateException("List is empty");
         }
-
         head = head.getNext();
-        if (head == null) {
-            tail = null;
-        }
         size--;
     }
 
     public void deleteTail() {
-        if (isEmpty()) {
+        if (tail == null) {
             throw new IllegalStateException("List is empty");
         }
-
-        if (head == tail) {
-            head = tail = null;
-        } else {
-            SNode<T> current = head;
-            while (current.getNext() != tail) {
-                current = current.getNext();
-            }
-            tail = current;
-            tail.setNext(null);
-        }
+        SNode prev = findPrevious(tail);
+        prev.setNext(null);
+        tail = prev;
         size--;
     }
 
-    public void delete(T data) {
-        if (isEmpty()) {
+    public void delete(SNode node) {
+        if (head == null) {
             throw new IllegalStateException("List is empty");
         }
-        if (head.getData().equals(data)) {
+        if (head == node) {
             deleteHead();
         } else {
-            SNode<T> current = head;
-            while (current.getNext() != null && !current.getNext().getData().equals(data)) {
-                current = current.getNext();
+            SNode prev = findPrevious(node);
+            if (prev == null) {
+                throw new IllegalArgumentException("Node not found");
             }
-    
-            if (current.getNext() != null) {
-                if (current.getNext() == tail) {
-                    tail = current;
-                }
-                current.setNext(current.getNext().getNext());
-                size--;
+            prev.setNext(node.getNext());
+            if (tail == node) {
+                tail = prev;
             }
+            size--;
         }
     }
-    
+
     public void sort() {
-        if (comparator == null) {
-            throw new IllegalStateException("Comparator not set");
-        }
-    
         if (size <= 1) {
             return;
         }
-    
-        SNode<T> current = head;
+
+        SNode sorted = null;
+        SNode current = head;
+
         while (current != null) {
-            SNode<T> next = current.getNext();
-            while (next != null) {
-                if (comparator.compare(current.getData(), next.getData()) > 0) {
-                    T temp = current.getData();
-                    current.setData(next.getData());
-                    next.setData(temp);
-                }
-                next = next.getNext();
-            }
-            current = current.getNext();
+            SNode next = current.getNext();
+            sortedInsert(current);
+            current = next;
         }
+        head = sorted;
     }
-    
+
     public void clear() {
-        head = tail = null;
+        head = null;
+        tail = null;
         size = 0;
     }
-    
+
     public void print() {
         System.out.println("List length: " + size);
-        System.out.println("Sorted status: " + (isSorted() ? "Sorted" : "Unsorted"));
+        System.out.println("Sorted status: " + (isSorted() ? "Sorted" : "Not sorted"));
+
         System.out.print("List content: ");
-    
-        SNode<T> current = head;
+        SNode current = head;
         while (current != null) {
             System.out.print(current.getData() + (current.getNext() != null ? " -> " : ""));
             current = current.getNext();
         }
         System.out.println();
     }
-    
-    public boolean isEmpty() {
-        return head == null;
-    }
-    
-    public boolean isSorted() {
-        if (comparator == null) {
-            throw new IllegalStateException("Comparator not set");
-        }
-    
-        SNode<T> current = head;
-        while (current != null && current.getNext() != null) {
-            if (comparator.compare(current.getData(), current.getNext().getData()) > 0) {
-                return false;
-            }
-            current = current.getNext();
-        }
-        return true;
-    }
-    
-    public int getSize() {
-        return size;
-    }
-}    
+}
+

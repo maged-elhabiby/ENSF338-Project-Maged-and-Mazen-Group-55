@@ -1,23 +1,23 @@
 package main.java.mylib.datastructures.nodes;
 
-public class SNode<T> {
-    private T data;
-    private SNode<T> next;
+public class SNode {
+    private int  data;
+    private SNode next;
 
-    public SNode(T data){
+    public SNode(int data){
         this.data = data;
         this.next = null;
     }
-    public T getData(){
+    public int getData(){
         return this.data;
     }
-    public void setData(T data) {
+    public void setData(int data) {
         this.data = data;
     }
-    public SNode<T> getNext(){
+    public SNode getNext(){
         return this.next;
     }
-    public void setNext(SNode<T> next){
+    public void setNext(SNode next){
         this.next = next;
     }
 }
