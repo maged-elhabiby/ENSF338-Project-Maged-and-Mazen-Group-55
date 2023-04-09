@@ -1,177 +1,160 @@
 package main.java.mylib.datastructures.tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
 
 import main.java.mylib.datastructures.nodes.TNode;
 
 public class BST {
     private TNode root;
 
-    public BST(){
+    public BST() {
         this.root = null;
     }
-    public BST (int value){
-        this.root = new TNode(value,0,null,null,null);
+
+    public BST(int val) {
+        this.root = new TNode(val, 0, null, null, null);
     }
-    public BST (TNode obj){
+
+    public BST(TNode obj) {
         this.root = obj;
     }
 
-    // Getter and Setter
-    public TNode getRoot(){
+    public TNode getRoot() {
         return this.root;
     }
 
-    public void setRoot(TNode root){
+    public void setRoot(TNode root) {
         this.root = root;
     }
 
-    // Insert a new node with value
-    public void insert(int value){
-        TNode newNode = new TNode(value, 0, null, null, null);
-        insertNode(newNode, this.root);
+    public void insert(int val) {
+        this.root = insertRec(this.root, val);
     }
-    // Insert an existing node into the tree
+
+    private TNode insertRec(TNode node, int val) {
+        if (node == null) {
+            return new TNode(val, 0, null, null, null);
+        }
+
+        if (val < node.getData()) {
+            node.setLeft(insertRec(node.getLeft(), val));
+        } else if (val > node.getData()) {
+            node.setRight(insertRec(node.getRight(), val));
+        }
+
+        return node;
+    }
+
     public void insert(TNode node) {
-        insertNode(node, this.root);
+        this.root = insertRec(this.root, node);
     }
 
-    private void insertNode(TNode newNode, TNode currNode) {
-        if (this.root == null) {
-            this.root = newNode;
-            return;
+    private TNode insertRec(TNode root, TNode node) {
+        if (root == null) {
+            return node;
         }
 
-        if (newNode.getData() < currNode.getData()) {
-            if (currNode.getLeft() == null) {
-                currNode.setLeft(newNode);
-                newNode.setParent(currNode);
-            } 
-            else {
-                insertNode(newNode, currNode.getLeft());
-            }
-        } 
-        else if (newNode.getData() > currNode.getData()) {
-            if (currNode.getRight() == null) {
-                currNode.setRight(newNode);
-                newNode.setParent(currNode);
-            } 
-            else {
-                insertNode(newNode, currNode.getRight());
-            }
+        if (node.getData() < root.getData()) {
+            root.setLeft(insertRec(root.getLeft(), node));
+        } else if (node.getData() > root.getData()) {
+            root.setRight(insertRec(root.getRight(), node));
         }
+
+        return root;
     }
 
-    // Delete node with data val
-    public void delete(int value) {
-        TNode nodeToDelete = search(value);
-        if (nodeToDelete == null) {
-            System.out.println("Value not found in the tree");
-            return;
-        }
-        deleteNode(nodeToDelete);
+    public void delete(int val) {
+        this.root = deleteRec(this.root, val);
     }
 
-    private void deleteNode(TNode node) {
-        if (node.getLeft() == null && node.getRight() == null) {
-            if (node == this.root) {
-                this.root = null;
-            } else if (node.getParent().getLeft() == node) {
-                node.getParent().setLeft(null);
-            } else {
-                node.getParent().setRight(null);
-            }
-        } else if (node.getLeft() != null && node.getRight() == null) {
-            if (node == this.root) {
-                this.root = node.getLeft();
-                this.root.setParent(null);
-            } else if (node.getParent().getLeft() == node) {
-                node.getParent().setLeft(node.getLeft());
-                node.getLeft().setParent(node.getParent());
-            } else {
-                node.getParent().setRight(node.getLeft());
-                node.getLeft().setParent(node.getParent());
-            }
-        } else if (node.getRight() != null && node.getLeft() == null) {
-            if (node == this.root) {
-                this.root = node.getRight();
-                this.root.setParent(null);
-            } else if (node.getParent().getLeft() == node) {
-                node.getParent().setLeft(node.getRight());
-                node.getRight().setParent(node.getParent());
-            } else {
-                node.getParent().setRight(node.getRight());
-                node.getRight().setParent(node.getParent());
-            }
-        } else {
-            TNode successor = findSuccessor(node);
-            node.setData(successor.getData());
-            deleteNode(successor);
-        }
-    }
-
-    private TNode findSuccessor(TNode node) {
-        TNode currNode = node.getRight();
-        while (currNode.getLeft() != null) {
-            currNode = currNode.getLeft();
-        }
-        return currNode;
-    }
-
-    // Search for a node with data val
-    public TNode search(int value) {
-        return searchNode(value, this.root);
-    }
-
-    private TNode searchNode(int value, TNode currNode) {
-        if (currNode == null) {
+    private TNode deleteRec(TNode root, int val) {
+        if (root == null) {
+            System.out.println("Value not found in the tree.");
             return null;
         }
-        if (value == currNode.getData()) {
-            return currNode;
-        }
-        if (value < currNode.getData()) {
-            return searchNode(value, currNode.getLeft());
-        }
-        return searchNode(value, currNode.getRight());
-    }
 
-    // Print tree content in ascending order
-    public void printInOrder() {
-        printInOrder(this.root);
-    }
-
-    private void printInOrder(TNode currNode) {
-        if (currNode == null) {
-            return;
-        }
-        printInOrder(currNode.getLeft());
-        System.out.print(currNode.getData() + " ");
-        printInOrder(currNode.getRight());
-    }
-
-    // Print tree content in Breadth-First order
-    public void printBF() {
-        if (this.root == null) {
-            return;
-        }
-        Queue<TNode> queue = new LinkedList<>();
-        queue.add(this.root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TNode currNode = queue.poll();
-                System.out.print(currNode.getData() + " ");
-                if (currNode.getLeft() != null) {
-                    queue.add(currNode.getLeft());
-                }
-                if (currNode.getRight() != null) {
-                    queue.add(currNode.getRight());
-                }
+        if (val < root.getData()) {
+            root.setLeft(deleteRec(root.getLeft(), val));
+        } else if (val > root.getData()) {
+            root.setRight(deleteRec(root.getRight(), val));
+        } else {
+            if (root.getLeft() == null) {
+                return root.getRight();
+            } else if (root.getRight() == null) {
+                return root.getLeft();
             }
+
+            root.setData(minValue(root.getRight()));
+            root.setRight(deleteRec(root.getRight(), root.getData()));
+        }
+        return root;
+    }
+
+    private int minValue(TNode node) {
+        int minValue = node.getData();
+        while (node.getLeft() != null) {
+            minValue = node.getLeft().getData();
+            node = node.getLeft();
+        }
+        return minValue;
+    }
+
+    public TNode search(int val) {
+        return searchRec(this.root, val);
+    }
+
+    private TNode searchRec(TNode node, int val) {
+        if (node == null || node.getData() == val) {
+            return node;
+        }
+
+        if (val < node.getData()) {
+            return searchRec(node.getLeft(), val);
+        }
+        return searchRec(node.getRight(), val);
+    }
+
+    public void printInOrder() {
+        printInOrderRec(this.root);
+        System.out.println();
+    }
+
+    private void printInOrderRec(TNode node) {
+        if (node != null) {
+            printInOrderRec(node.getLeft());
+            System.out.print(node.getData() + " ");
+            printInOrderRec(node.getRight());
+        }
+    }
+    public void printBF() {
+        int height = getHeight(this.root);
+        for (int i = 1; i <= height; i++) {
+            printGivenLevel(this.root, i);
             System.out.println();
         }
     }
+
+    private void printGivenLevel(TNode node, int level) {
+        if (node == null) {
+            return;
+        }
+        if (level == 1) {
+            System.out.print(node.getData() + " ");
+        } else if (level > 1) {
+            printGivenLevel(node.getLeft(), level - 1);
+            printGivenLevel(node.getRight(), level - 1);
+        }
+    }
+
+    public int getHeight(TNode node) {
+        if (node == null) {
+            return 0;
+        } else {
+            int leftHeight = getHeight(node.getLeft());
+            int rightHeight = getHeight(node.getRight());
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
 }
+
+
 
