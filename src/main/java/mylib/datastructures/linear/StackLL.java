@@ -1,33 +1,62 @@
 package main.java.mylib.datastructures.linear;
 import main.java.mylib.datastructures.nodes.SNode;
 
-public class StackLL <T extends Comparable<T>> extends SLL{
-    public StackLL(){
+public class StackLL extends SLL {
+    public StackLL() {
         super();
     }
 
-    public void push(SNode<T> node) {
-        super.insertHead(node);
-    }
-
-    public SNode<T> pop() {
-        SNode<T> node = super.getHead();
-        super.deleteHead();
-        return node;
-    }
-
-    public SNode<T> peek(){
-        return super.getHead();
+    public StackLL(SNode head) {
+        super(head);
     }
 
     @Override
-    public void insertTail(SNode<T> node){}
-
-    public boolean isEmpty(){
-        return super.isEmpty();
+    public void insertTail(SNode node) {
+        // Override with empty body to prevent misuse
     }
 
-    public void clear(){
-        super.clear();
+    @Override
+    public void insert(SNode node, int position) {
+        // Override with empty body to prevent misuse
+    }
+
+    @Override
+    public void sortedInsert(SNode node) {
+        // Override with empty body to prevent misuse
+    }
+
+    @Override
+    public void deleteTail() {
+        // Override with empty body to prevent misuse
+    }
+
+    @Override
+    public void delete(SNode node) {
+        // Override with empty body to prevent misuse
+    }
+
+    @Override
+    public void sort() {
+        // Override with empty body to prevent misuse
+    }
+
+    public void push(SNode node) {
+        super.insertHead(node);
+    }
+
+    public SNode pop() {
+        if (super.getSize() == 0) {
+            throw new IllegalStateException("Stack is empty");
+        }
+        SNode headNode = super.getHead();
+        super.deleteHead();
+        return headNode;
+    }
+
+    public SNode peek() {
+        if (super.getSize() == 0) {
+            throw new IllegalStateException("Stack is empty");
+        }
+        return super.getHead();
     }
 }
