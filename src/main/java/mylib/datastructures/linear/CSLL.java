@@ -4,8 +4,9 @@ import main.java.mylib.datastructures.linear.SLL;
 import main.java.mylib.datastructures.nodes.SNode;
 
 public class CSLL extends SLL {
-   
-
+    SNode head = getHead();
+    SNode tail = getTail();
+    private int size = getSize();
 
     public CSLL() {
         super();
