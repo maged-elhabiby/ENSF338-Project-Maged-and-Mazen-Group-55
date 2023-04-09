@@ -1,127 +1,133 @@
 package main.java.mylib.datastructures.linear;
 
 import main.java.mylib.datastructures.nodes.DNode;
-import main.java.mylib.datastructures.nodes.SNode;
 
-public class DLL <T extends Comparable<T>> extends SLL<T> {
-    private DNode<T> head;
-    private DNode<T> tail;
+public class DLL {
+    private DNode head;
+    private DNode tail;
     private int size;
 
-    public DLL(){
-        super();
+    public DLL() {
         this.head = null;
         this.tail = null;
-    }
-    public DLL(DNode<T> head){
-        super(head);
-        this.head = head;
-        this.tail = head;
-    }
-    @Override
-    public void insertHead(SNode<T> node) {
-        DNode<T> dNode = new DNode<T>(node.getData());
-        if (isEmpty()) {
-            this.head = dNode;
-            this.tail = dNode;
-        } else {
-            dNode.setNext(this.head);
-            this.head.setPrev(dNode);
-            this.head = dNode;
-        }
-        this.size++;
+        this.size = 0;
     }
 
-    @Override
-    public void insertTail(SNode<T> node) {
-        DNode<T> dNode = new DNode<T>(node.getData());
-        if (isEmpty()) {
-            this.head = dNode;
-            this.tail = dNode;
-        } else {
-            dNode.setPrev(this.tail);
-            this.tail.setNext(dNode);
-            this.tail = dNode;
-        }
-        this.size++;
+    public DLL(DNode head) {
+        this.head = head;
+        this.tail = head;
+        this.size = 1;
     }
-    
-    @Override
-    public void insert(SNode<T> node, int position) {
-        if (position < 0 || position > this.size) {
-            throw new IndexOutOfBoundsException("Invalid position");
-        }
-        if (position == 0) {
-            this.insertHead(node);
-        } else if (position == this.size) {
-            this.insertTail(node);
+
+    public void insertHead(DNode node) {
+        if (head == null) {
+            head = node;
+            tail = node;
         } else {
-            DNode<T> current = this.head;
-            for (int i = 0; i < position - 1; i++) {
-                current = (DNode<T>) current.getNext();
+            node.setNext(head);
+            head.setPrev(node);
+            head = node;
+        }
+        size++;
+    }
+
+    public void insertTail(DNode node) {
+        if (tail == null) {
+            head = node;
+            tail = node;
+        } else {
+            tail.setNext(node);
+            node.setPrev(tail);
+            tail = node;
+        }
+        size++;
+    }
+
+    public void insert(DNode node, int position) {
+        if (position <= 0 || position > size + 1) {
+            throw new IllegalArgumentException("Invalid position");
+        }
+
+        if (position == 1) {
+            insertHead(node);
+        } else if (position == size + 1) {
+            insertTail(node);
+        } else {
+            DNode current = head;
+            for (int i = 1; i < position - 1; i++) {
+                current = current.getNext();
             }
-            DNode<T> dNode = new DNode<T>(node.getData());
-            dNode.setNext(current.getNext());
-            dNode.setPrev(current);
-            current.setNext(dNode);
-            this.size++;
+            node.setNext(current.getNext());
+            node.setPrev(current);
+            current.getNext().setPrev(node);
+            current.setNext(node);
+            size++;
         }
     }
-    @Override
+
+    public DNode search(int data) {
+        DNode current = head;
+        while (current != null) {
+            if (current.getData() == data) {
+                return current;
+            }
+            current = current.getNext();
+        }
+        return null;
+    }
+
     public void deleteHead() {
-        if (isEmpty()) {
-            throw new IndexOutOfBoundsException("List is empty");
+        if (head == null) {
+            throw new IllegalStateException("List is empty");
         }
-        this.head = this.head.getNext();
-        if (this.head == null) {
-            this.tail = null;
-        } else {
-            this.head.setPrev(null);
+        head = head.getNext();
+        if (head != null) {
+            head.setPrev(null);
         }
-        this.size--;
+        size--;
     }
-    @Override
-    public void deleteTail(){
-        if(isEmpty()){
-            throw new IndexOutOfBoundsException("List is empty");
+
+    public void deleteTail() {
+        if (tail == null) {
+            throw new IllegalStateException("List is empty");
         }
-        this.tail = this.tail.getPrev();
-        if(this.tail == null){
-            this.head = null;
-        } else {
-            this.tail.setNext(null);
+        DNode prev = tail.getPrev();
+        if (prev != null) {
+            prev.setNext(null);
         }
-        this.size--;
-        
+        tail = prev;
+        size--;
     }
-    public void delete(DNode<T> node){
-        if(isEmpty()){
-            throw new IndexOutOfBoundsException("List is empty");
+
+    public void delete(DNode node) {
+        if (head == null) {
+            throw new IllegalStateException("List is empty");
         }
-        if(node.getPrev() == this.head){
-            this.deleteHead();
-        } else if(node.getNext() == this.tail){
-            this.deleteTail();
+        if (head == node) {
+            deleteHead();
+        } else if (tail == node) {
+            deleteTail();
         } else {
             node.getPrev().setNext(node.getNext());
             node.getNext().setPrev(node.getPrev());
-            this.size--;
+            size--;
         }
     }
-    public void printReverse(){
-        System.out.println("List length: " + this.size);
-        System.out.println("Sorted list: "+ (this.isSorted() ? "sorted" : "not sorted"));
-        System.out.println("Reversed list content: ");
-        DNode<T> current = this.tail;
-        while(current != null){
-            System.out.println(current.getData());
-            if(current.getPrev() != null){
-                System.out.println(" -> ");
-            }
-            current = current.getPrev();
+
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    public void print() {
+        System.out.println("List length: " + size);
+        System.out.print("List content: ");
+        DNode current = head;
+        while (current != null) {
+            System.out.print(current.getData() + (current.getNext() != null ? " <-> " : ""));
+            current = current.getNext();
         }
         System.out.println();
     }
-
-    
 }
