@@ -185,5 +185,16 @@ public class SLL {
         }
         System.out.println();
     }
+    public int getSize() {
+        return this.size;
+    }
+
+    public SNode getHead() {
+        return this.head;
+    }
+
+    public SNode getTail() {
+        return this.tail;
+    }
 }
 

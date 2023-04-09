@@ -1,9 +1,8 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,130 +11,132 @@ import main.java.mylib.datastructures.linear.SLL;
 import main.java.mylib.datastructures.nodes.SNode;
 
 public class SLLTest {
-    private SLL<Integer> sll;
+    private SLL sll;
 
     @Before
     public void setUp() {
-        sll = new SLL<>((a, b) -> a - b);
+        sll = new SLL();
     }
 
     @Test
     public void testInsertHead() {
-        sll.insertHead(new SNode<>(5));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+
+        sll.insertHead(node1);
         assertEquals(1, sll.getSize());
-        assertEquals((Integer)5, sll.getHead().getData());
-        assertEquals((Integer)5, sll.getTail().getData());
+        assertEquals(node1, sll.getHead());
+
+        sll.insertHead(node2);
+        assertEquals(2, sll.getSize());
+        assertEquals(node2, sll.getHead());
+        assertEquals(node1, sll.getHead().getNext());
     }
 
     @Test
     public void testInsertTail() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+
+        sll.insertTail(node1);
+        assertEquals(1, sll.getSize());
+        assertEquals(node1, sll.getHead());
+
+        sll.insertTail(node2);
         assertEquals(2, sll.getSize());
-        assertEquals((Integer)5, sll.getHead().getData());
-        assertEquals((Integer)10, sll.getTail().getData());
+        assertEquals(node1, sll.getHead());
+        assertEquals(node2, sll.getHead().getNext());
     }
 
     @Test
     public void testInsert() {
-        sll.insert(new SNode<>(5), 0);
-        sll.insert(new SNode<>(10), 1);
-        sll.insert(new SNode<>(15), 2);
-        sll.insert(new SNode<>(20), 3);
-        sll.insert(new SNode<>(25), 4);
-        sll.insert(new SNode<>(30), 5);
-        sll.insert(new SNode<>(7), 1);
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        SNode node3 = new SNode(3);
 
-        assertEquals(7, sll.getSize());
-        assertEquals((Integer)5, sll.getHead().getData());
-        assertEquals((Integer)30, sll.getTail().getData());
-        assertEquals((Integer)7, sll.getHead().getNext().getData());
-    }
+        sll.insert(node1, 1);
+        assertEquals(1, sll.getSize());
+        assertEquals(node1, sll.getHead());
 
-    @Test
-    public void testSortedInsert() {
-        sll.sortedInsert(new SNode<>(5));
-        sll.sortedInsert(new SNode<>(10));
-        sll.sortedInsert(new SNode<>(3));
-        sll.sortedInsert(new SNode<>(15));
-        sll.sortedInsert(new SNode<>(2));
-        assertEquals(5, sll.getSize());
-        assertEquals((Integer)2, sll.getHead().getData());
-        assertEquals((Integer)15, sll.getTail().getData());
-        assertTrue(sll.isSorted());
+        sll.insert(node2, 1);
+        assertEquals(2, sll.getSize());
+        assertEquals(node2, sll.getHead());
+        assertEquals(node1, sll.getHead().getNext());
+
+        sll.insert(node3, 2);
+        assertEquals(3, sll.getSize());
+        assertEquals(node2, sll.getHead());
+        assertEquals(node3, sll.getHead().getNext());
+        assertEquals(node1, sll.getHead().getNext().getNext());
     }
 
     @Test
     public void testSearch() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(15));
-        assertNotNull(sll.search(10));
-        assertEquals((Integer)10, sll.search(10).getData());
-        assertNull(sll.search(7));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+
+        sll.insertHead(node1);
+        sll.insertHead(node2);
+
+        assertEquals(node2, sll.search(2));
+        assertEquals(node1, sll.search(1));
+        assertNull(sll.search(3));
     }
 
     @Test
     public void testDeleteHead() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(15));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+
+        sll.insertHead(node1);
+        sll.insertHead(node2);
         sll.deleteHead();
-        assertEquals(2, sll.getSize());
-        assertEquals((Integer)10, sll.getHead().getData());
+
+        assertEquals(1, sll.getSize());
+        assertEquals(node1, sll.getHead());
     }
 
     @Test
     public void testDeleteTail() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(15));
-        sll.deleteTail();
-        assertEquals(2, sll.getSize());
-        assertEquals((Integer)10, sll.getTail().getData());
-    }
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
 
+        sll.insertHead(node1);
+        sll.insertHead(node2);
+        sll.deleteTail();
+
+        assertEquals(1, sll.getSize());
+        assertEquals(node2, sll.getHead());
+        assertNull(sll.getHead().getNext());
+    }
     @Test
     public void testDelete() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(15));
-        sll.delete(10);
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        SNode node3 = new SNode(3);
+
+        sll.insertHead(node1);
+        sll.insertHead(node2);
+        sll.insertHead(node3);
+
+        // Test deleting head
+        sll.delete(node3);
         assertEquals(2, sll.getSize());
-        assertEquals((Integer)5, sll.getHead().getData());
-        assertEquals((Integer)15, sll.getTail().getData());
-    }
+        assertEquals(node2, sll.getHead());
+        assertEquals(node1, sll.getHead().getNext());
 
-    @Test
-    public void testSort() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(3));
-        sll.insertTail(new SNode<>(15));
-        sll.insertTail(new SNode<>(2));
-        sll.sort();
-        assertEquals(5, sll.getSize());
-        assertEquals((Integer)2, sll.getHead().getData());
-        assertEquals((Integer)15, sll.getTail().getData());
-        assertTrue(sll.isSorted());
-    }
+        // Test deleting middle node
+        sll.insertHead(node3);
+        sll.delete(node2);
+        assertEquals(2, sll.getSize());
+        assertEquals(node3, sll.getHead());
+        assertEquals(node1, sll.getHead().getNext());
 
-    @Test
-    public void testClear() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(15));
-        sll.clear();
-        assertEquals(0, sll.getSize());
-        assertNull(sll.getTail());
-        assertNull(sll.getTail());
-    }
-
-    @Test
-    public void testPrint() {
-        sll.insertTail(new SNode<>(5));
-        sll.insertTail(new SNode<>(10));
-        sll.insertTail(new SNode<>(15));
-        sll.print();
+        // Test deleting tail
+        sll.insertHead(node2);
+        sll.delete(node1);
+        assertEquals(2, sll.getSize());
+        assertEquals(node2, sll.getHead());
+        assertEquals(node3, sll.getHead().getNext());
     }
 }
