@@ -1,12 +1,12 @@
 package main.java.mylib.datastructures.linear;
 
-import main.java.mylib.datastructures.linear.SLL;
 import main.java.mylib.datastructures.nodes.SNode;
 
 public class CSLL extends SLL {
     SNode head = getHead();
     SNode tail = getTail();
-    private int size = getSize();
+    int size = getSize();
+
 
     public CSLL() {
         super();
@@ -14,15 +14,15 @@ public class CSLL extends SLL {
 
     public CSLL(SNode head) {
         super(head);
-        head.setNext(head);
+        tail.setNext(head);
     }
 
     @Override
     public void insertHead(SNode node) {
-        if (isEmpty()) {
+        if (head == null) {
             head = node;
             tail = node;
-            node.setNext(node);
+            tail.setNext(head);
         } else {
             node.setNext(head);
             tail.setNext(node);
@@ -33,13 +33,13 @@ public class CSLL extends SLL {
 
     @Override
     public void insertTail(SNode node) {
-        if (isEmpty()) {
+        if (tail == null) {
             head = node;
             tail = node;
-            node.setNext(node);
+            tail.setNext(head);
         } else {
-            node.setNext(head);
             tail.setNext(node);
+            node.setNext(head);
             tail = node;
         }
         size++;
@@ -47,9 +47,9 @@ public class CSLL extends SLL {
 
     @Override
     public void deleteHead() {
-        if (isEmpty()) {
+        if (head == null) {
             throw new IllegalStateException("List is empty");
-        } else if (size == 1) {
+        } else if (head == tail) {
             head = null;
             tail = null;
         } else {
@@ -61,9 +61,9 @@ public class CSLL extends SLL {
 
     @Override
     public void deleteTail() {
-        if (isEmpty()) {
+        if (tail == null) {
             throw new IllegalStateException("List is empty");
-        } else if (size == 1) {
+        } else if (head == tail) {
             head = null;
             tail = null;
         } else {
@@ -77,7 +77,9 @@ public class CSLL extends SLL {
         size--;
     }
 
-    private boolean isEmpty() {
-        return size == 0;
+    @Override
+    public void clear() {
+        super.clear();
+        tail = null;
     }
 }
