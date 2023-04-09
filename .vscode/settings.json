@@ -5,5 +5,10 @@
         "c:\\Users\\maged\\Downloads\\junit-4.13.2.jar",
         "c:\\Users\\mazen\\OneDrive\\Desktop\\junittesting\\lib\\hamcrest-core-1.3.jar",
         "c:\\Users\\mazen\\OneDrive\\Desktop\\junittesting\\lib\\junit-4.13.2.jar"
+    ],
+    "java.project.sourcePaths": [
+        "datastructures",
+        "datastructures\\src\\main\\java",
+        "datastructures\\src\\test\\java"
     ]
 }
