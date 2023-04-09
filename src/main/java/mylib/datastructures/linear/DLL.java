@@ -130,4 +130,16 @@ public class DLL {
         }
         System.out.println();
     }
+
+    public int getSize() {
+        return this.size;
+    }
+
+    public DNode getHead() {
+        return this.head;
+    }
+
+    public DNode getTail() {
+        return this.tail;
+    }
 }
