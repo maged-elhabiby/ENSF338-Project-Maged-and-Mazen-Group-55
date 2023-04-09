@@ -103,7 +103,7 @@ public class DLLTest {
         DNode node1 = new DNode(1);
         DNode node2 = new DNode(2);
         DNode node3 = new DNode(3);
-        DNode node4 = new DNode(4);
+        
     
         dll.insertHead(node1);
         dll.insertHead(node2);
