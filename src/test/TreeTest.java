@@ -1,4 +1,4 @@
-package main.java.mylib;
+package test;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -92,12 +92,12 @@ public class TreeTest {
         assertNull(node2);
 
         // Test printInOrder
-        String expectedInOrder = "2 3 4 5 6 7 8 ";
+        //String expectedInOrder = "2 3 4 5 6 7 8 ";
         //assertEquals(expectedInOrder, avl.printInOrder());
 
         // Test printBF
-        String expectedBF = "5 \n3 7 \n2 4 6 8 \n";
-       // assertEquals(expectedBF, avl.printBF());
+        //String expectedBF = "5 \n3 7 \n2 4 6 8 \n";
+        // assertEquals(expectedBF, avl.printBF());
 
         // Test delete
         avl.delete(7);

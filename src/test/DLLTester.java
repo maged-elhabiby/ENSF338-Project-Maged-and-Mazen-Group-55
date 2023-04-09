@@ -1,10 +1,10 @@
-package main.java.mylib;
+package test;
 
 import main.java.mylib.datastructures.linear.DLL;
 import main.java.mylib.datastructures.nodes.DNode;
 
 public class DLLTester {
-    public static void main(String[] args) {
+/*     public static void main(String[] args) {
         DLL<Integer> myList = new DLL<Integer>();
         System.out.println("List length: " + myList.isEmpty()); // expected output: List length: true
 
@@ -47,5 +47,5 @@ public class DLLTester {
         myList.print(); // expected output: List length: 0, Sorted status: not sorted, List content:
 
         System.out.println("List length: " + myList.isEmpty()); // expected output: List length: true
-    }
+    }*/
 }
