@@ -1,17 +1,18 @@
 package main.java.mylib.datastructures.linear;
 import main.java.mylib.datastructures.nodes.SNode;
 
-public class StackLL extends SLL {
-    public StackLL() {
+
+public class QueueLL extends SLL{
+    public QueueLL() {
         super();
     }
 
-    public StackLL(SNode head) {
+    public QueueLL(SNode head) {
         super(head);
     }
 
     @Override
-    public void insertTail(SNode node) {
+    public void insertHead(SNode node) {
         // Override with empty body to prevent misuse
     }
 
@@ -40,13 +41,13 @@ public class StackLL extends SLL {
         // Override with empty body to prevent misuse
     }
 
-    public void push(SNode node) {
-        super.insertHead(node);
+    public void enqueue(SNode node) {
+        super.insertTail(node);
     }
 
-    public SNode pop() {
+    public SNode dequeue() {
         if (super.getSize() == 0) {
-            throw new IllegalStateException("Stack is empty");
+            throw new IllegalStateException("Queue is empty");
         }
         SNode headNode = super.getHead();
         super.deleteHead();
@@ -55,7 +56,7 @@ public class StackLL extends SLL {
 
     public SNode peek() {
         if (super.getSize() == 0) {
-            throw new IllegalStateException("Stack is empty");
+            throw new IllegalStateException("Queue is empty");
         }
         return super.getHead();
     }
