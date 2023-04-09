@@ -1,175 +1,133 @@
 package main.java.mylib.datastructures.tree;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import main.java.mylib.datastructures.nodes.TNode;
 
 public class AVL extends BST{
-    public AVL(){
+    public AVL() {
         super();
     }
-    public AVL(int value){
-        super(value);
+
+    public AVL(int val) {
+        super(val);
     }
-    public AVL(TNode obj){
+
+    public AVL(TNode obj) {
         super();
-        this.setRoot(obj);
-        if(obj.getLeft() != null || obj.getRight() != null){
-            createBalancedTree(obj);
-        }
+        setRoot(createAVLFromTree(obj));
     }
 
     @Override
-    public void setRoot(TNode root){
-        super.setRoot(root);
-        if(root.getLeft() != null || root.getRight() != null){
-            createBalancedTree(root);
+    public void setRoot(TNode root) {
+        if (root != null) {
+            super.setRoot(createAVLFromTree(root));
+        } else {
+            super.setRoot(null);
         }
     }
+
+    private TNode createAVLFromTree(TNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        TNode newNode = new TNode(node.getData(), 0, null, null, null);
+        newNode.setLeft(createAVLFromTree(node.getLeft()));
+        newNode.setRight(createAVLFromTree(node.getRight()));
+        return balance(newNode);
+    }
+
     @Override
     public void insert(int val) {
-        TNode newNode = new TNode(val, 0, null, null, null);
-        super.insert(newNode);
-        balanceTree(newNode.getParent());
+        TNode node = new TNode(val, 0, null, null, null);
+        insert(node);
     }
 
     @Override
     public void insert(TNode node) {
         super.insert(node);
-        balanceTree(node.getParent());
+        setRoot(balance(getRoot()));
+    }
+
+    private TNode balance(TNode node) {
+        if (node == null) {
+            return null;
+        }
+
+        int balanceFactor = getBalanceFactor(node);
+
+        if (balanceFactor > 1) {
+            if (getBalanceFactor(node.getLeft()) < 0) {
+                node.setLeft(rotateLeft(node.getLeft()));
+            }
+            node = rotateRight(node);
+        } else if (balanceFactor < -1) {
+            if (getBalanceFactor(node.getRight()) > 0) {
+                node.setRight(rotateRight(node.getRight()));
+            }
+            node = rotateLeft(node);
+        }
+
+        node.setLeft(balance(node.getLeft()));
+        node.setRight(balance(node.getRight()));
+
+        return node;
+    }
+
+    private int getBalanceFactor(TNode node) {
+        return getHeight(node.getLeft()) - getHeight(node.getRight());
+    }
+
+    private TNode rotateLeft(TNode node) {
+        TNode newRoot = node.getRight();
+        TNode temp = newRoot.getLeft();
+
+        newRoot.setLeft(node);
+        node.setRight(temp);
+
+        return newRoot;
+    }
+
+    private TNode rotateRight(TNode node) {
+        TNode newRoot = node.getLeft();
+        TNode temp = newRoot.getRight();
+
+        newRoot.setRight(node);
+        node.setLeft(temp);
+
+        return newRoot;
     }
 
     @Override
     public void delete(int val) {
-        TNode nodeToDelete = search(val);
-        if (nodeToDelete == null) {
-            System.out.println("Value not found in the tree");
-            return;
+        if (search(val) != null) {
+            super.delete(val);
+            setRoot(balanceAfterDeletion(getRoot()));
+        } else {
+            System.out.println("Value not found in the tree.");
         }
-        super.delete(val);
-        balanceTree(nodeToDelete.getParent());
     }
 
-    
-    // Private helper function to create a balanced AVL tree from an existing node
-    private void createBalancedTree(TNode node) {
-        List<TNode> nodes = new ArrayList<>();
-        inOrderTraversal(node, nodes);
-        int n = nodes.size();
-        this.setRoot(createBalancedTreeHelper(nodes, 0, n - 1));
-    }
-
-    private TNode createBalancedTreeHelper(List<TNode> nodes, int start, int end) {
-        if (start > end) {
+    private TNode balanceAfterDeletion(TNode node) {
+        if (node == null) {
             return null;
         }
-        int mid = (start + end) / 2;
-        TNode node = nodes.get(mid);
-        node.setLeft(createBalancedTreeHelper(nodes, start, mid - 1));
-        node.setRight(createBalancedTreeHelper(nodes, mid + 1, end));
+
+        int balanceFactor = getBalanceFactor(node);
+
+        if (balanceFactor > 1) {
+            if (getBalanceFactor(node.getLeft()) <= 0) {
+                node.setLeft(rotateLeft(node.getLeft()));
+            }
+            node = rotateRight(node);
+        } else if (balanceFactor < -1) {
+            if (getBalanceFactor(node.getRight()) >= 0) {
+                node.setRight(rotateRight(node.getRight()));
+            }
+            node = rotateLeft(node);
+        }
+
+        node.setLeft(balanceAfterDeletion(node.getLeft()));
+        node.setRight(balanceAfterDeletion(node.getRight()));
+
         return node;
     }
-
-    // Private helper function to traverse the tree in-order and store nodes in a list
-    private void inOrderTraversal(TNode node, List<TNode> nodes) {
-        if (node == null) {
-            return;
-        }
-        inOrderTraversal(node.getLeft(), nodes);
-        nodes.add(node);
-        inOrderTraversal(node.getRight(), nodes);
-    }
-
-    // Private helper function to balance the tree
-    private void balanceTree(TNode node) {
-        while (node != null) {
-            int balanceFactor = calculateBalanceFactor(node);
-            if (balanceFactor > 1) {
-                if (calculateBalanceFactor(node.getLeft()) >= 0) {
-                    rightRotate(node);
-                } else {
-                    leftRightRotate(node);
-                }
-            } else if (balanceFactor < -1) {
-                if (calculateBalanceFactor(node.getRight()) <= 0) {
-                    leftRotate(node);
-                } else {
-                    rightLeftRotate(node);
-                }
-            }
-            node = node.getParent();
-        }
-    }
-
-    // Private helper functions for rotating the tree
-    private void rightRotate(TNode node) {
-        TNode leftChild = node.getLeft();
-        TNode parent = node.getParent();
-
-        node.setLeft(leftChild.getRight());
-        if (leftChild.getRight() != null) {
-            leftChild.getRight().setParent(node);
-        }
-
-        leftChild.setRight(node);
-        node.setParent(leftChild);
-
-        leftChild.setParent(parent);
-        if (parent == null) {
-            this.setRoot(leftChild);
-        } else if (parent.getLeft() == node) {
-            parent.setLeft(leftChild);
-        } else {
-            parent.setRight(leftChild);
-        }
-    }
-
-    private void leftRotate(TNode node) {
-        TNode rightChild = node.getRight();
-        TNode parent = node.getParent();
-
-        node.setRight(rightChild.getLeft());
-        if (rightChild.getLeft() != null) {
-            rightChild.getLeft().setParent(node);
-        }
-
-        rightChild.setLeft(node);
-        node.setParent(rightChild);
-
-        rightChild.setParent(parent);
-        if (parent == null) {
-            this.setRoot(rightChild);
-        } else if (parent.getLeft() == node) {
-            parent.setLeft(rightChild);
-        } else {
-            parent.setRight(rightChild);
-        }
-    }
-
-    private void leftRightRotate(TNode node) {
-        leftRotate(node.getLeft());
-        rightRotate(node);
-    }
-
-    private void rightLeftRotate(TNode node) {
-        rightRotate(node.getRight());
-        leftRotate(node);
-    }
-
-    // Private helper function to calculate the balance factor of a node
-    private int calculateBalanceFactor(TNode node) {
-        int leftHeight = -1;
-        if (node.getLeft() != null) {
-            leftHeight = node.getLeft().getBalance();
-        }
-    
-        int rightHeight = -1;
-        if (node.getRight() != null) {
-            rightHeight = node.getRight().getBalance();
-        }
-    
-        return leftHeight - rightHeight;
-    }    
 }
-

@@ -14,9 +14,43 @@ public class AVLTest {
     public void setUp() {
         tree = new AVL();
     }
+    @Test
+    public void testInsertAVL() {
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(1);
+        tree.insert(4);
+
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(3, tree.getRoot().getLeft().getData());
+        assertEquals(7, tree.getRoot().getRight().getData());
+        assertEquals(1, tree.getRoot().getLeft().getLeft().getData());
+        assertEquals(4, tree.getRoot().getLeft().getRight().getData());
+    }
 
     @Test
-    public void testInsertAndBalance() {
+    public void testDeleteAVL() {
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(1);
+        tree.insert(4);
+        tree.insert(6);
+        tree.insert(8);
+
+        tree.delete(1);
+
+        assertNull(tree.search(1));
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(3, tree.getRoot().getLeft().getData());
+        assertEquals(7, tree.getRoot().getRight().getData());
+        assertNull(tree.getRoot().getLeft().getLeft());
+        assertEquals(4, tree.getRoot().getLeft().getRight().getData());
+    }
+
+    @Test
+    public void testInsertAndBalanceAVL() {
         tree.insert(10);
         tree.insert(5);
         tree.insert(15);
@@ -39,7 +73,7 @@ public class AVLTest {
     }
 
     @Test
-    public void testDeleteAndBalance() {
+    public void testDeleteAndBalanceAVL() {
         tree.insert(10);
         tree.insert(5);
         tree.insert(15);
@@ -82,4 +116,20 @@ public class AVLTest {
         TNode notFoundNode = tree.search(100);
         assertNull(notFoundNode);
     }
+    @Test
+    public void testDeleteNotFound() {
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(7);
+        tree.insert(1);
+        tree.insert(4);
+
+        tree.delete(10); // Value not found in the tree.
+
+        assertEquals(5, tree.getRoot().getData());
+        assertEquals(3, tree.getRoot().getLeft().getData());
+        assertEquals(7, tree.getRoot().getRight().getData());
+        assertEquals(1, tree.getRoot().getLeft().getLeft().getData());
+        assertEquals(4, tree.getRoot().getLeft().getRight().getData());
+        }
 }
