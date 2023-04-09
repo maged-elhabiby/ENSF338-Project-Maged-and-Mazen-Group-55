@@ -13,6 +13,9 @@ public class DNode {
     public int getData(){
         return this.data;
     }
+    public void setData(int data){
+        this.data = data;
+    }
     public DNode getPrev(){
         return this.prev;
     }
@@ -25,5 +28,4 @@ public class DNode {
     public void setNext(DNode next){
         this.next = next;
     }
-
 }
