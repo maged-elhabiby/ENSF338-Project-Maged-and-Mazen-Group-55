@@ -1,105 +1,82 @@
 package main.java.mylib.datastructures.linear;
 
+import main.java.mylib.datastructures.linear.SLL;
 import main.java.mylib.datastructures.nodes.SNode;
 
-public class CSLL<T extends Comparable<T>> extends SLL<T> {
-    private SNode<T> head;
-    private SNode<T> tail;
-    private int size;
+public class CSLL extends SLL {
+   
+
 
     public CSLL() {
         super();
     }
 
-    public CSLL(SNode<T> head) {
+    public CSLL(SNode head) {
         super(head);
-        this.tail.setNext(this.head); // make the list circular
+        head.setNext(head);
     }
 
     @Override
-    public void insertHead(SNode<T> node) {
+    public void insertHead(SNode node) {
         if (isEmpty()) {
-            this.head = node;
-            this.tail = node;
-            node.setNext(this.head); // make the list circular
+            head = node;
+            tail = node;
+            node.setNext(node);
         } else {
-            node.setNext(this.head);
-            this.head = node;
-            this.tail.setNext(this.head); // update tail reference to make the list circular
+            node.setNext(head);
+            tail.setNext(node);
+            head = node;
         }
-        this.size++;
+        size++;
     }
 
     @Override
-    public void insertTail(SNode<T> node) {
+    public void insertTail(SNode node) {
         if (isEmpty()) {
-            this.head = node;
-            this.tail = node;
-            node.setNext(this.head); // make the list circular
+            head = node;
+            tail = node;
+            node.setNext(node);
         } else {
-            node.setNext(this.head);
-            this.tail.setNext(node);
-            this.tail = node;
+            node.setNext(head);
+            tail.setNext(node);
+            tail = node;
         }
-        this.size++;
+        size++;
     }
 
     @Override
     public void deleteHead() {
         if (isEmpty()) {
             throw new IllegalStateException("List is empty");
+        } else if (size == 1) {
+            head = null;
+            tail = null;
+        } else {
+            tail.setNext(head.getNext());
+            head = head.getNext();
         }
-        this.head = this.head.getNext();
-        this.tail.setNext(this.head); // update tail reference to make the list circular
-        this.size--;
-        if (isEmpty()) {
-            this.tail = null;
-        }
+        size--;
     }
 
     @Override
     public void deleteTail() {
         if (isEmpty()) {
             throw new IllegalStateException("List is empty");
-        }
-    
-        if (size == 1) {
-            this.head = null;
-            this.tail = null;
+        } else if (size == 1) {
+            head = null;
+            tail = null;
         } else {
-            SNode<T> current = this.head;
-            while (current.getNext() != this.tail) {
+            SNode current = head;
+            while (current.getNext() != tail) {
                 current = current.getNext();
             }
-            current.setNext(this.head); // update next reference of second last node to make the list circular
-            this.tail = current;
+            current.setNext(head);
+            tail = current;
         }
-        this.size--;
+        size--;
     }
 
-    @Override
-    public void clear() {
-        this.head = null;
-        this.tail = null;
-        this.size = 0;
-    }
-
-    @Override
-    public void print() {
-        System.out.println("List length: " + size);
-        System.out.println("Sorted status: " + (isSorted() ? "sorted" : "not sorted"));
-    
-        System.out.print("List content: ");
-        SNode<T> current = this.head;
-        for (int i = 0; i < size; i++) { // use size variable to loop through the list
-            System.out.print(current.getData());
-            if (current.getNext() != this.head) { // check if we've reached the end of the circular list
-                System.out.print(" -> ");
-                current = current.getNext();
-            } else {
-                break;
-            }
-        }
-        System.out.println();
+    private boolean isEmpty() {
+        return size == 0;
     }
 }
