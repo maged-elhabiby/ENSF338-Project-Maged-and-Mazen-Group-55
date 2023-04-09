@@ -3,83 +3,57 @@ package main.java.mylib.datastructures.linear;
 import main.java.mylib.datastructures.nodes.SNode;
 
 public class CSLL extends SLL {
-    SNode head = getHead();
-    SNode tail = getTail();
-    int size = getSize();
 
-
+    // Update the default constructor to initialize the circular list with a null head object
     public CSLL() {
         super();
     }
 
+    // Update the overloaded constructor to create a circular list with the given head node
     public CSLL(SNode head) {
         super(head);
-        tail.setNext(head);
+        getTail().setNext(head);
     }
 
     @Override
     public void insertHead(SNode node) {
-        if (head == null) {
-            head = node;
-            tail = node;
-            tail.setNext(head);
-        } else {
-            node.setNext(head);
-            tail.setNext(node);
-            head = node;
-        }
-        size++;
+        super.insertHead(node);
+        getTail().setNext(getHead());
     }
 
     @Override
     public void insertTail(SNode node) {
-        if (tail == null) {
-            head = node;
-            tail = node;
-            tail.setNext(head);
-        } else {
-            tail.setNext(node);
-            node.setNext(head);
-            tail = node;
+        super.insertTail(node);
+        getTail().setNext(getHead());
+    }
+
+    @Override
+    public void insert(SNode node, int position) {
+        super.insert(node, position);
+        if (position == getSize()) {
+            getTail().setNext(getHead());
         }
-        size++;
     }
 
     @Override
     public void deleteHead() {
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
-        } else if (head == tail) {
-            head = null;
-            tail = null;
+        if (getSize() == 1) {
+            clear();
         } else {
-            tail.setNext(head.getNext());
-            head = head.getNext();
+            super.deleteHead();
+            getTail().setNext(getHead());
         }
-        size--;
     }
 
     @Override
     public void deleteTail() {
-        if (tail == null) {
-            throw new IllegalStateException("List is empty");
-        } else if (head == tail) {
-            head = null;
-            tail = null;
+        if (getSize() == 1) {
+            clear();
         } else {
-            SNode current = head;
-            while (current.getNext() != tail) {
-                current = current.getNext();
-            }
-            current.setNext(head);
-            tail = current;
+            super.deleteTail();
+            getTail().setNext(getHead());
         }
-        size--;
     }
 
-    @Override
-    public void clear() {
-        super.clear();
-        tail = null;
-    }
+   
 }
