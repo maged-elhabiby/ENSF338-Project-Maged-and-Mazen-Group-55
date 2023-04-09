@@ -2,98 +2,66 @@ package main.java.mylib.datastructures.linear;
 import main.java.mylib.datastructures.nodes.DNode;
 
 public class CDLL extends DLL {
-    DNode head = getHead();
-    DNode tail = getTail();
-    int size = getSize();
 
     public CDLL() {
         super();
-        head.setPrev(tail);
-        tail.setNext(head);
     }
 
-    public CDLL(DNode node) {
-        super(node);
-        head.setPrev(tail);
-        tail.setNext(head);
+    public CDLL(DNode head) {
+        super(head);
         head.setNext(head);
         head.setPrev(head);
     }
 
     @Override
     public void insertHead(DNode node) {
-        if (head == null) {
+        if (getSize() == 0) {
             super.insertHead(node);
-            head.setPrev(tail);
-            tail.setNext(head);
+            node.setNext(node);
+            node.setPrev(node);
         } else {
-            node.setNext(head);
-            head.setPrev(node);
-            head = node;
-            head.setPrev(tail);
-            tail.setNext(head);
+            super.insertHead(node);
+            getHead().setPrev(getTail());
+            getTail().setNext(getHead());
         }
-        size++;
     }
 
     @Override
     public void insertTail(DNode node) {
-        if (tail == null) {
+        if (getSize() == 0) {
             super.insertTail(node);
-            head.setPrev(tail);
-            tail.setNext(head);
+            node.setNext(node);
+            node.setPrev(node);
         } else {
-            tail.setNext(node);
-            node.setPrev(tail);
-            tail = node;
-            head.setPrev(tail);
-            tail.setNext(head);
+            super.insertTail(node);
+            getHead().setPrev(getTail());
+            getTail().setNext(getHead());
         }
-        size++;
     }
 
     @Override
     public void deleteHead() {
-        if (head == null) {
+        if (getSize() == 0) {
             throw new IllegalStateException("List is empty");
+        } else if (getSize() == 1) {
+            clear();
+        } else {
+            super.deleteHead();
+            getHead().setPrev(getTail());
+            getTail().setNext(getHead());
         }
-        head = head.getNext();
-        head.setPrev(tail);
-        tail.setNext(head);
-        size--;
     }
 
     @Override
     public void deleteTail() {
-        if (tail == null) {
+        if (getSize() == 0) {
             throw new IllegalStateException("List is empty");
-        }
-        tail = tail.getPrev();
-        tail.setNext(head);
-        head.setPrev(tail);
-        size--;
-    }
-
-    @Override
-    public void delete(DNode node) {
-        if (head == null) {
-            throw new IllegalStateException("List is empty");
-        }
-        if (head == node) {
-            deleteHead();
-        } else if (tail == node) {
-            deleteTail();
+        } else if (getSize() == 1) {
+            clear();
         } else {
-            node.getPrev().setNext(node.getNext());
-            node.getNext().setPrev(node.getPrev());
-            size--;
+            super.deleteTail();
+            getHead().setPrev(getTail());
+            getTail().setNext(getHead());
         }
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-        head.setPrev(tail);
-        tail.setNext(head);
     }
 }

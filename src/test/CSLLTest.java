@@ -1,7 +1,3 @@
-
-//package main.java.mylib.datastructures.linear;
-
-
 package test;
 
 import org.junit.Test;
@@ -10,8 +6,6 @@ import static org.junit.Assert.*;
 
 import main.java.mylib.datastructures.nodes.SNode;
 import main.java.mylib.datastructures.linear.CSLL;
-
-//import static org.junit.jupiter.api.Assertions.*;
 
 public class CSLLTest {
 
