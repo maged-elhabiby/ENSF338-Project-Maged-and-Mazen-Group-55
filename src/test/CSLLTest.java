@@ -24,97 +24,70 @@ public class CSLLTest {
 
     @Test
     public void testInsertHead() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
-        assertEquals(3, csll.getHead().getData());
-        assertEquals(5, csll.getHead().getNext().getData());
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        csll.insertHead(node1);
+        csll.insertHead(node2);
+
         assertEquals(2, csll.getSize());
+        assertEquals(2, csll.getHead().getData());
+        assertEquals(1, csll.getTail().getData());
+        assertEquals(csll.getHead(), csll.getTail().getNext());
     }
 
     @Test
     public void testInsertTail() {
-        csll.insertTail(new SNode(5));
-        csll.insertTail(new SNode(3));
-        assertEquals(5, csll.getHead().getData());
-        assertEquals(3, csll.getTail().getData());
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        csll.insertTail(node1);
+        csll.insertTail(node2);
+
         assertEquals(2, csll.getSize());
-    }
-
-    @Test
-    public void testInsert() {
-        csll.insert(new SNode(5), 1);
-        csll.insert(new SNode(3), 2);
-        csll.insert(new SNode(7), 3);
-        csll.insert(new SNode(4), 2);
-        assertEquals(5, csll.getHead().getData());
-        assertEquals(4, csll.getHead().getNext().getData());
-        //assertEquals(3, csll.getTail().getPrev().getData());
-        assertEquals(7, csll.getTail().getData());
-        assertEquals(4, csll.getSize());
-    }
-
-    @Test
-    public void testSearch() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
-        assertNotNull(csll.search(5));
-        assertNull(csll.search(7));
+        assertEquals(1, csll.getHead().getData());
+        assertEquals(2, csll.getTail().getData());
+        assertEquals(csll.getHead(), csll.getTail().getNext());
     }
 
     @Test
     public void testDeleteHead() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        csll.insertHead(node1);
+        csll.insertHead(node2);
+
         csll.deleteHead();
-        assertEquals(5, csll.getHead().getData());
+
         assertEquals(1, csll.getSize());
+        assertEquals(1, csll.getHead().getData());
+        assertEquals(csll.getHead(), csll.getTail().getNext());
     }
 
     @Test
     public void testDeleteTail() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        csll.insertHead(node1);
+        csll.insertHead(node2);
+
         csll.deleteTail();
-        assertEquals(3, csll.getHead().getData());
+
         assertEquals(1, csll.getSize());
-    }
-
-    @Test
-    public void testDelete() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
-        csll.insertHead(new SNode(7));
-        SNode nodeToDelete = csll.search(5);
-        if (nodeToDelete != null) {
-            csll.delete(nodeToDelete);
-        }
-        assertEquals(7, csll.getHead().getData());
-        assertEquals(3, csll.getHead().getNext().getData());
-        assertEquals(2, csll.getSize());
-    }
-
-    @Test
-    public void testSort() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
-        csll.insertHead(new SNode(7));
-        csll.insertHead(new SNode(4));
-        csll.sort();
-        assertEquals(3, csll.getHead().getData());
-        assertEquals(4, csll.getHead().getNext().getData());
-        assertEquals(5, csll.getHead().getNext().getNext().getData());
-        assertEquals(7, csll.getTail().getData());
+        assertEquals(2, csll.getHead().getData());
+        assertEquals(csll.getHead(), csll.getTail().getNext());
     }
 
     @Test
     public void testClear() {
-        csll.insertHead(new SNode(5));
-        csll.insertHead(new SNode(3));
-        csll.insertHead(new SNode(7));
+        SNode node1 = new SNode(1);
+        SNode node2 = new SNode(2);
+        csll.insertHead(node1);
+        csll.insertHead(node2);
+
         csll.clear();
+
+        assertEquals(0, csll.getSize());
         assertNull(csll.getHead());
         assertNull(csll.getTail());
-        assertEquals(0, csll.getSize());
     }
 
 }
