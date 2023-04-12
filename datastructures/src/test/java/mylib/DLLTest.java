@@ -67,9 +67,10 @@ public class DLLTest {
         dll.insertHead(node1);
         dll.insertHead(node2);
 
-        assertEquals(node1, dll.search(1));
-        assertEquals(node2, dll.search(2));
-        assertNull(dll.search(3));
+        assertEquals("Node1 should be found in the list", node1, dll.search(node1));
+        assertEquals("Node2 should be found in the list", node2, dll.search(node2));
+        DNode node3 = new DNode(3);
+        assertNull("Node3 should not be found in the list", dll.search(node3));
     }
 
     @Test
@@ -147,5 +148,3 @@ public class DLLTest {
         assertNull(dll.getTail());
     }
 }
-
-        

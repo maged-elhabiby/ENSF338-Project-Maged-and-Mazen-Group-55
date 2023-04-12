@@ -103,16 +103,16 @@ public class SLL {
         }
     }
 
-    public SNode search(int data) {
+    public SNode search(SNode node) {
         SNode current = head;
         while (current != null) {
-            if (current.getData() == data) {
+            if (current == node) {
                 return current;
             }
             current = current.getNext();
         }
         return null;
-    }
+    }    
 
     public void deleteHead() {
         if (head == null) {
@@ -196,7 +196,4 @@ public class SLL {
     public SNode getTail() {
         return this.tail;
     }
-    
-    
 }
-

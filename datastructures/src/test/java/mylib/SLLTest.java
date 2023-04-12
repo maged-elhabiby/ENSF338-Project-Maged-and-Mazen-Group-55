@@ -72,13 +72,13 @@ public class SLLTest {
     public void testSearch() {
         SNode node1 = new SNode(1);
         SNode node2 = new SNode(2);
-
         sll.insertHead(node1);
         sll.insertHead(node2);
 
-        assertEquals(node2, sll.search(2));
-        assertEquals(node1, sll.search(1));
-        assertNull(sll.search(3));
+        assertEquals("Node2 should be found in the list", node2, sll.search(node2));
+        assertEquals("Node1 should be found in the list", node1, sll.search(node1));
+        SNode node3 = new SNode(3);
+        assertNull("Node3 should not be found in the list", sll.search(node3));
     }
 
     @Test

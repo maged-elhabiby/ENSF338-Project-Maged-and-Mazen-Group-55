@@ -65,16 +65,17 @@ public class DLL {
         }
     }
 
-    public DNode search(int data) {
+    public DNode search(DNode node) {
         DNode current = head;
         while (current != null) {
-            if (current.getData() == data) {
+            if (current == node) {
                 return current;
             }
             current = current.getNext();
         }
         return null;
     }
+    
 
     public void deleteHead() {
         if (head == null) {
