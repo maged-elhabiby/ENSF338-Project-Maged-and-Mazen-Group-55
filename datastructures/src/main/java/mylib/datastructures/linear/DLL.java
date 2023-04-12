@@ -76,6 +76,63 @@ public class DLL {
         return null;
     }
     
+    public void sort() {
+        if (size <= 1) {
+            return;
+        }
+    
+        // Create a new list to store the sorted nodes
+        DLL sortedList = new DLL();
+    
+        // Iterate through the original list and use sortedInsert() for each node
+        DNode current = head;
+        while (current != null) {
+            DNode next = current.getNext();
+    
+            // Detach the current node from the original list
+            current.setNext(null);
+            current.setPrev(null);
+    
+            // Insert the current node into the sorted list
+            sortedList.sortedInsert(current);
+    
+            current = next;
+        }
+    
+        // Replace the original list with the sorted list
+        head = sortedList.getHead();
+        tail = sortedList.getTail();
+        size = sortedList.getSize();
+    }
+    
+
+    public void sortedInsert(DNode node) {
+        if (head == null || head.getData() >= node.getData()) {
+            node.setNext(head);
+            if (head != null) {
+                head.setPrev(node);
+            }
+            head = node;
+            if (tail == null) {
+                tail = node;
+            }
+            size++;
+        } else {
+            DNode current = head;
+            while (current.getNext() != null && current.getNext().getData() < node.getData()) {
+                current = current.getNext();
+            }
+            node.setNext(current.getNext());
+            node.setPrev(current);
+            current.setNext(node);
+            if (node.getNext() != null) {
+                node.getNext().setPrev(node);
+            } else {
+                tail = node;
+            }
+            size++;
+        }
+    }
 
     public void deleteHead() {
         if (head == null) {

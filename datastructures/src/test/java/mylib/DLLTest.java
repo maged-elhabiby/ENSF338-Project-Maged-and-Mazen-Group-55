@@ -74,6 +74,39 @@ public class DLLTest {
     }
 
     @Test
+    public void testSortedInsert() {
+        dll.sortedInsert(new DNode(3));
+        dll.sortedInsert(new DNode(1));
+        dll.sortedInsert(new DNode(4));
+        dll.sortedInsert(new DNode(2));
+
+        assertEquals(4, dll.getSize());
+        assertEquals(1, dll.getHead().getData());
+        assertEquals(4, dll.getTail().getData());
+    }
+
+    @Test
+    public void testSort() {
+        dll.insertTail(new DNode(3));
+        dll.insertTail(new DNode(1));
+        dll.insertTail(new DNode(4));
+        dll.insertTail(new DNode(2));
+
+        dll.sort();
+
+        assertEquals(4, dll.getSize());
+        assertEquals(1, dll.getHead().getData());
+        assertEquals(4, dll.getTail().getData());
+    }
+
+    @Test
+    public void testEmptyList() {
+        assertNull(dll.getHead());
+        assertNull(dll.getTail());
+        assertEquals(0, dll.getSize());
+    }
+
+    @Test
     public void testDeleteHead() {
         DNode node1 = new DNode(1);
         DNode node2 = new DNode(2);
