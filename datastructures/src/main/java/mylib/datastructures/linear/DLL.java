@@ -1,3 +1,6 @@
+/**
+ * Double Linked List (DLL) data structure implementation.
+ */
 package mylib.datastructures.linear;
 
 import mylib.datastructures.nodes.DNode;
@@ -6,19 +9,27 @@ public class DLL {
     private DNode head;
     private DNode tail;
     private int size;
-
+    /**
+     * Default constructor that initializes an empty DLL.
+     */
     public DLL() {
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
-
+    /**
+     * Constructor that initializes a DLL with a given head node.
+     * @param head The first node in the list.
+     */
     public DLL(DNode head) {
         this.head = head;
         this.tail = head;
         this.size = 1;
     }
-
+    /**
+     * Inserts a node at the beginning of the list.
+     * @param node The node to be inserted.
+     */
     public void insertHead(DNode node) {
         if (head == null) {
             head = node;
@@ -30,7 +41,10 @@ public class DLL {
         }
         size++;
     }
-
+    /**
+     * Inserts a node at the end of the list.
+     * @param node The node to be inserted.
+     */
     public void insertTail(DNode node) {
         if (tail == null) {
             head = node;
@@ -42,7 +56,12 @@ public class DLL {
         }
         size++;
     }
-
+    /**
+     * Inserts a node at a given position in the list.
+     * @param node The node to be inserted.
+     * @param position The position where the node will be inserted (1-indexed).
+     * @throws IllegalArgumentException if the position is invalid.
+     */
     public void insert(DNode node, int position) {
         if (position <= 0 || position > size + 1) {
             throw new IllegalArgumentException("Invalid position");
@@ -64,6 +83,11 @@ public class DLL {
             size++;
         }
     }
+    /**
+     * Searches for a node in the list.
+     * @param node The node to be searched for.
+     * @return The node if found, null otherwise.
+     */
 
     public DNode search(DNode node) {
         DNode current = head;
@@ -75,7 +99,9 @@ public class DLL {
         }
         return null;
     }
-    
+    /**
+     * Sorts the list in ascending order.
+     */
     public void sort() {
         if (size <= 1) {
             return;
@@ -105,7 +131,10 @@ public class DLL {
         size = sortedList.getSize();
     }
     
-
+    /**
+     * Inserts a node in a sorted list while maintaining the sorted order.
+     * @param node The node to be inserted.
+     */
     public void sortedInsert(DNode node) {
         if (head == null || head.getData() >= node.getData()) {
             node.setNext(head);
@@ -133,7 +162,10 @@ public class DLL {
             size++;
         }
     }
-
+    /**
+     * Deletes the first node of the list.
+     * @throws IllegalStateException if the list is empty.
+     */
     public void deleteHead() {
         if (head == null) {
             throw new IllegalStateException("List is empty");
@@ -144,7 +176,10 @@ public class DLL {
         }
         size--;
     }
-
+    /**
+     * Deletes the last node of the list.
+     * @throws IllegalStateException if the list is empty.
+     */
     public void deleteTail() {
         if (tail == null) {
             throw new IllegalStateException("List is empty");
@@ -156,7 +191,11 @@ public class DLL {
         tail = prev;
         size--;
     }
-
+    /**
+     * Deletes a specific node from the list.
+     * @param node The node to be deleted.
+     * @throws IllegalStateException if the list is empty.
+     */
     public void delete(DNode node) {
         if (head == null) {
             throw new IllegalStateException("List is empty");
@@ -171,13 +210,17 @@ public class DLL {
             size--;
         }
     }
-
+    /**
+     * Clears the list, removing all nodes.
+     */
     public void clear() {
         head = null;
         tail = null;
         size = 0;
     }
-
+    /**
+     * Prints the list's length, and its content in a human-readable format.
+     */
     public void print() {
         System.out.println("List length: " + size);
         System.out.print("List content: ");
@@ -188,15 +231,24 @@ public class DLL {
         }
         System.out.println();
     }
-
+    /**
+     * Returns the size of the list.
+     * @return The number of nodes in the list.
+     */
     public int getSize() {
         return this.size;
     }
-
+    /**
+     * Returns the head (first node) of the list.
+     * @return The head node.
+     */
     public DNode getHead() {
         return this.head;
     }
-
+    /**
+     * Returns the tail (last node) of the list.
+     * @return The tail node.
+     */
     public DNode getTail() {
         return this.tail;
     }
