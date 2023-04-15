@@ -94,14 +94,24 @@ public class SLL {
             insertHead(node);
         } else {
             SNode current = head;
-            while (current.getNext() != null && current.getNext().getData() < node.getData()) {
+            SNode previous = null;
+    
+            while (current != null && current.getData() < node.getData()) {
+                previous = current;
                 current = current.getNext();
             }
-            node.setNext(current.getNext());
-            current.setNext(node);
+    
+            node.setNext(current);
+            previous.setNext(node);
+    
+            if (current == null) {
+                tail = node;
+            }
+    
             size++;
         }
     }
+    
 
     public SNode search(SNode node) {
         SNode current = head;
@@ -151,21 +161,24 @@ public class SLL {
         }
     }
 
-    public void sort() {
-        if (size <= 1) {
-            return;
-        }
-
-        SNode sorted = null;
-        SNode current = head;
-
-        while (current != null) {
-            SNode next = current.getNext();
-            sortedInsert(current);
-            current = next;
-        }
-        head = sorted;
+public void sort() {
+    if (size <= 1) {
+        return;
     }
+
+    SLL sortedList = new SLL();
+    SNode current = head;
+
+    while (current != null) {
+        SNode next = current.getNext();
+        current.setNext(null); // Disconnect the node from the original list
+        sortedList.sortedInsert(current);
+        current = next;
+    }
+    head = sortedList.getHead();
+    tail = sortedList.getTail();
+}
+
 
     public void clear() {
         head = null;
@@ -196,4 +209,5 @@ public class SLL {
     public SNode getTail() {
         return this.tail;
     }
+    
 }

@@ -180,4 +180,20 @@ public class DLLTest {
         assertNull(dll.getHead());
         assertNull(dll.getTail());
     }
+    @Test
+    public void testSorts() {
+        dll.insertTail(new DNode(3));
+        dll.insertTail(new DNode(1));
+        dll.insertTail(new DNode(4));
+        dll.insertTail(new DNode(2));
+
+        dll.sort();
+
+        assertEquals(4, dll.getSize());
+        assertEquals(1, dll.getHead().getData());
+        assertEquals(2, dll.getHead().getNext().getData());
+        assertEquals(3, dll.getHead().getNext().getNext().getData());
+        assertEquals(4, dll.getTail().getData());
+}
+
 }
