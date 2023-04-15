@@ -195,5 +195,28 @@ public class DLLTest {
         assertEquals(3, dll.getHead().getNext().getNext().getData());
         assertEquals(4, dll.getTail().getData());
 }
+    @Test
+        public void testInsertAtFifthPosition() {
+            DLL list = new DLL();
 
+            // Create and insert nodes into the list
+            list.insertTail(new DNode(1));
+            list.insertTail(new DNode(2));
+            list.insertTail(new DNode(3));
+            list.insertTail(new DNode(4));
+            list.insertTail(new DNode(6));
+            list.insertTail(new DNode(7));
+
+            // Insert a new node at the 5th position
+            DNode nodeToInsert = new DNode(5);
+            list.insert(nodeToInsert, 5);
+
+            // Verify the node is inserted at the 5th position
+            DNode current = list.getHead();
+            for (int i = 1; i < 5; i++) {
+                current = current.getNext();
+            }
+
+            assertEquals(nodeToInsert.getData(), current.getData());
+        }
 }
