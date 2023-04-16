@@ -1,8 +1,15 @@
 /**
- * A class representing a node in a doubly linked list.
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
  */
+
 package mylib.datastructures.nodes;
 
+/**
+ * A class representing a node in a doubly linked list.
+ */
 public class DNode {
     private int data;
     private DNode prev;

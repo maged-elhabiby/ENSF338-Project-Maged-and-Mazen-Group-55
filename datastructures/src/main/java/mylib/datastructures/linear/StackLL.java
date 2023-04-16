@@ -1,9 +1,16 @@
 /**
- * A Stack data structure implementation using a Singly Linked List (SLL) as the underlying data structure.
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
  */
+
 package mylib.datastructures.linear;
 import mylib.datastructures.nodes.SNode;
 
+/**
+ * A Stack data structure implementation using a Singly Linked List (SLL) as the underlying data structure.
+ */
 public class StackLL extends SLL {
     /**
      * Default constructor that initializes the stack with a null head object.

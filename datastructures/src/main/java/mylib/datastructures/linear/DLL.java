@@ -1,10 +1,16 @@
 /**
- * Double Linked List (DLL) data structure implementation.
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
  */
-package mylib.datastructures.linear;
 
+package mylib.datastructures.linear;
 import mylib.datastructures.nodes.DNode;
 
+/**
+ * Double Linked List (DLL) data structure implementation.
+ */
 public class DLL {
     private DNode head;
     private DNode tail;

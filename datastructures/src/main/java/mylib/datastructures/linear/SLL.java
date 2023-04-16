@@ -1,12 +1,18 @@
 /**
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
+ */
+
+package mylib.datastructures.linear;
+import mylib.datastructures.nodes.SNode;
+
+/**
  * A singly linked list (SLL) implementation.
  * This class represents a singly linked list of SNode objects.
  * It provides methods to insert, delete, search, and sort nodes in the list.
  */
-package mylib.datastructures.linear;
-
-import mylib.datastructures.nodes.SNode;
-
 public class SLL {
     private SNode head;
     private SNode tail;

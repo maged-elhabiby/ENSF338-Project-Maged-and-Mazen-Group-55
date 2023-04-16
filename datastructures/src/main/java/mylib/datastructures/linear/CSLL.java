@@ -1,11 +1,17 @@
 /**
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
+ */
+
+package mylib.datastructures.linear;
+import mylib.datastructures.nodes.SNode;
+
+/**
  * A Circular Singly Linked List (CSLL) data structure that extends the Singly Linked List (SLL).
  * The last node in the list points back to the head node, creating a circular list.
  */
-package mylib.datastructures.linear;
-
-import mylib.datastructures.nodes.SNode;
-
 public class CSLL extends SLL {
 
     /**

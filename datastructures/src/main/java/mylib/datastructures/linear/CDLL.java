@@ -1,10 +1,17 @@
 /**
- * A Circular Doubly Linked List (CDLL) data structure that extends the Doubly Linked List (DLL).
- * Both the head and tail nodes point to each other, creating a circular list.
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
  */
+
 package mylib.datastructures.linear;
 import mylib.datastructures.nodes.DNode;
 
+/**
+ * A Circular Doubly Linked List (CDLL) data structure that extends the Doubly Linked List (DLL).
+ * Both the head and tail nodes point to each other, creating a circular list.
+ */
 public class CDLL extends DLL {
 
     /**
