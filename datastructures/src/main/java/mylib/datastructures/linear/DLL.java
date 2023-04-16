@@ -56,24 +56,25 @@ public class DLL {
         }
         size++;
     }
+    
     /**
      * Inserts a node at a given position in the list.
      * @param node The node to be inserted.
-     * @param position The position where the node will be inserted (1-indexed).
+     * @param position The position where the node will be inserted (0-indexed).
      * @throws IllegalArgumentException if the position is invalid.
      */
     public void insert(DNode node, int position) {
-        if (position <= 0 || position > size + 1) {
+        if (position < 0 || position > size) {
             throw new IllegalArgumentException("Invalid position");
         }
 
-        if (position == 1) {
+        if (position == 0) {
             insertHead(node);
-        } else if (position == size + 1) {
+        } else if (position == size) {
             insertTail(node);
         } else {
             DNode current = head;
-            for (int i = 1; i < position - 1; i++) {
+            for (int i = 0; i < position - 1; i++) {
                 current = current.getNext();
             }
             node.setNext(current.getNext());

@@ -2,19 +2,38 @@ package mylib.datastructures.tree;
 import mylib.datastructures.nodes.TNode;
 
 public class AVL extends BST{
+
+    /**
+     * Default constructor for an empty AVL tree.
+     */
     public AVL() {
         super();
     }
 
+    /**
+     * Constructor for an AVL tree with a single node containing the specified data value.
+     *
+     * @param val the data value of the root node
+     */
     public AVL(int val) {
         super(val);
     }
 
+    /**
+     * Constructor for an AVL tree created from an existing tree node.
+     *
+     * @param obj the existing tree node
+     */
     public AVL(TNode obj) {
         super();
         setRoot(createAVLFromTree(obj));
     }
 
+    /**
+     * Sets the root node of this AVL tree after balancing the input node.
+     *
+     * @param root the input root node
+     */
     @Override
     public void setRoot(TNode root) {
         if (root != null) {
@@ -24,6 +43,12 @@ public class AVL extends BST{
         }
     }
 
+    /**
+     * Creates a balanced AVL tree from the given tree node.
+     *
+     * @param node the root node of the tree to balance
+     * @return the root node of the balanced AVL tree
+     */
     private TNode createAVLFromTree(TNode node) {
         if (node == null) {
             return null;
@@ -35,18 +60,34 @@ public class AVL extends BST{
         return balance(newNode);
     }
 
+    /**
+     * Inserts a node with the specified data value into this AVL tree and balances the tree.
+     *
+     * @param val the data value to insert
+     */
     @Override
     public void insert(int val) {
         TNode node = new TNode(val, 0, null, null, null);
         insert(node);
     }
 
+    /**
+     * Inserts a node into this AVL tree and balances the tree.
+     *
+     * @param node the node to insert
+     */
     @Override
     public void insert(TNode node) {
         super.insert(node);
         setRoot(balance(getRoot()));
     }
 
+    /**
+     * Balances the given node in the AVL tree.
+     *
+     * @param node the node to balance
+     * @return the balanced node
+     */
     private TNode balance(TNode node) {
         if (node == null) {
             return null;
@@ -72,10 +113,22 @@ public class AVL extends BST{
         return node;
     }
 
+    /**
+     * Computes the balance factor of the given node.
+     *
+     * @param node the node to compute the balance factor for
+     * @return the balance factor of the node
+     */
     private int getBalanceFactor(TNode node) {
         return getHeight(node.getLeft()) - getHeight(node.getRight());
     }
 
+    /**
+     * Performs a left rotation on the given node.
+     *
+     * @param node the node to rotate
+     * @return the new root node after rotation
+     */
     private TNode rotateLeft(TNode node) {
         TNode newRoot = node.getRight();
         TNode temp = newRoot.getLeft();
@@ -86,6 +139,12 @@ public class AVL extends BST{
         return newRoot;
     }
 
+    /**
+     * Performs a right rotation on the given node.
+     *
+     * @param node the node to rotate
+     * @return the new root node after rotation
+     */
     private TNode rotateRight(TNode node) {
         TNode newRoot = node.getLeft();
         TNode temp = newRoot.getRight();
@@ -96,6 +155,11 @@ public class AVL extends BST{
         return newRoot;
     }
 
+    /**
+     * Deletes a node with the specified data value from this AVL tree and balances the tree.
+     *
+     * @param val the data value to delete
+     */
     @Override
     public void delete(int val) {
         if (search(val) != null) {
@@ -106,6 +170,12 @@ public class AVL extends BST{
         }
     }
 
+    /**
+     * Balances the AVL tree after deletion.
+     *
+     * @param node the root node of the subtree to balance
+     * @return the balanced node after deletion
+     */
     private TNode balanceAfterDeletion(TNode node) {
         if (node == null) {
             return null;

@@ -52,16 +52,16 @@ public class SLLTest {
         SNode node2 = new SNode(2);
         SNode node3 = new SNode(3);
 
-        sll.insert(node1, 1);
+        sll.insert(node1, 0);
         assertEquals(1, sll.getSize());
         assertEquals(node1, sll.getHead());
 
-        sll.insert(node2, 1);
+        sll.insert(node2, 0);
         assertEquals(2, sll.getSize());
         assertEquals(node2, sll.getHead());
         assertEquals(node1, sll.getHead().getNext());
 
-        sll.insert(node3, 2);
+        sll.insert(node3, 1);
         assertEquals(3, sll.getSize());
         assertEquals(node2, sll.getHead());
         assertEquals(node3, sll.getHead().getNext());
@@ -187,14 +187,14 @@ public class SLLTest {
         SNode node3 = new SNode(3);
         SNode node4 = new SNode(4);
         SNode node5 = new SNode(5);
-
+    
         sll.insertHead(node1);
         sll.insertTail(node2);
         sll.insertTail(node3);
         sll.insertTail(node4);
-
-        sll.insert(node5, 5);
-
+    
+        sll.insert(node5, 4);
+    
         assertEquals(5, sll.getSize());
         assertEquals(node1, sll.getHead());
         assertEquals(node2, sll.getHead().getNext());
@@ -202,6 +202,7 @@ public class SLLTest {
         assertEquals(node4, sll.getHead().getNext().getNext().getNext());
         assertEquals(node5, sll.getHead().getNext().getNext().getNext().getNext());
     }
+    
     @Test
     public void testInsertAtFifthPositions() {
         SLL list = new SLL();
@@ -220,7 +221,7 @@ public class SLLTest {
 
         // Verify the node is inserted at the 5th position
         SNode current = list.getHead();
-        for (int i = 1; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             current = current.getNext();
         }
 

@@ -49,11 +49,11 @@ public class DLLTest {
         DNode node1 = new DNode(1);
         DNode node2 = new DNode(2);
         DNode node3 = new DNode(3);
-
-        dll.insert(node1, 1);
-        dll.insert(node2, 2);
-        dll.insert(node3, 2);
-
+    
+        dll.insert(node1, 0); // Change the position to 0
+        dll.insert(node2, 1); // Change the position to 1
+        dll.insert(node3, 1); // Change the position to 1
+    
         assertEquals(3, dll.getSize());
         assertEquals(node1, dll.getHead());
         assertEquals(node3, dll.getHead().getNext());
@@ -209,11 +209,11 @@ public class DLLTest {
 
             // Insert a new node at the 5th position
             DNode nodeToInsert = new DNode(5);
-            list.insert(nodeToInsert, 5);
+            list.insert(nodeToInsert, 4);
 
             // Verify the node is inserted at the 5th position
             DNode current = list.getHead();
-            for (int i = 1; i < 5; i++) {
+            for (int i = 0; i < 4; i++) {
                 current = current.getNext();
             }
 

@@ -6,30 +6,66 @@ import mylib.datastructures.nodes.TNode;
 public class BST {
     private TNode root;
 
+/**
+     * Default constructor that initializes an empty BST.
+     */
     public BST() {
         this.root = null;
     }
 
+    /**
+     * Parameterized constructor that initializes a BST with a single node.
+     *
+     * @param val the data value of the root node
+     */
     public BST(int val) {
         this.root = new TNode(val, 0, null, null, null);
     }
 
+    /**
+     * Parameterized constructor that initializes a BST with a given root node.
+     *
+     * @param obj the root node
+     */
     public BST(TNode obj) {
         this.root = obj;
     }
 
+    /**
+     * Returns the root node of this BST.
+     *
+     * @return the root node
+     */
     public TNode getRoot() {
         return this.root;
     }
 
+    /**
+     * Sets the root node of this BST.
+     *
+     * @param root the new root node
+     */
     public void setRoot(TNode root) {
         this.root = root;
     }
 
+
+    /**
+     * Inserts a new node with the specified data value into this BST.
+     * 
+     * @param val the data value to insert
+     */
     public void insert(int val) {
         this.root = insertRec(this.root, val);
     }
 
+    /**
+     * A helper method to recursively insert a new node with the specified data value into the BST.
+     * 
+     * @param node the current node
+     * @param val the data value to insert
+     * @return the updated node after insertion
+     */
     private TNode insertRec(TNode node, int val) {
         if (node == null) {
             return new TNode(val, 0, null, null, null);
@@ -44,10 +80,22 @@ public class BST {
         return node;
     }
 
+    /**
+     * Inserts a new node into this BST.
+     * 
+     * @param node the node to insert
+     */
     public void insert(TNode node) {
         this.root = insertRec(this.root, node);
     }
 
+    /**
+     * A helper method to recursively insert a new node into the BST.
+     * 
+     * @param root the current root node
+     * @param node the node to insert
+     * @return the updated root node after insertion
+     */
     private TNode insertRec(TNode root, TNode node) {
         if (root == null) {
             return node;
@@ -62,6 +110,11 @@ public class BST {
         return root;
     }
 
+    /**
+     * Deletes a node with the specified data value from this BST.
+     * 
+     * @param val the data value to delete
+     */
     public void delete(int val) {
         this.root = deleteRec(this.root, val);
     }
@@ -89,6 +142,12 @@ public class BST {
         return root;
     }
 
+    /**
+     * Finds the minimum data value in the subtree rooted at the given node.
+     *
+     * @param node the root node of the subtree to search for the minimum value
+     * @return the minimum data value in the subtree
+     */
     private int minValue(TNode node) {
         int minValue = node.getData();
         while (node.getLeft() != null) {
@@ -98,10 +157,23 @@ public class BST {
         return minValue;
     }
 
+    /**
+     * Searches for a node with the specified data value in this BST.
+     *
+     * @param val the data value to search for
+     * @return the node with the specified data value if found, null otherwise
+     */
     public TNode search(int val) {
         return searchRec(this.root, val);
     }
 
+    /**
+     * A helper method to recursively search for a node with the specified data value in the BST.
+     *
+     * @param node the current node
+     * @param val the data value to search for
+     * @return the node with the specified data value if found, null otherwise
+     */
     private TNode searchRec(TNode node, int val) {
         if (node == null || node.getData() == val) {
             return node;
@@ -113,11 +185,19 @@ public class BST {
         return searchRec(node.getRight(), val);
     }
 
+    /**
+     * Prints the data values of this BST in in-order traversal.
+     */  
     public void printInOrder() {
         printInOrderRec(this.root);
         System.out.println();
     }
 
+    /**
+     * A helper method to recursively print the data values of the BST in in-order traversal.
+     *
+     * @param node the current node
+     */
     private void printInOrderRec(TNode node) {
         if (node != null) {
             printInOrderRec(node.getLeft());
@@ -125,6 +205,11 @@ public class BST {
             printInOrderRec(node.getRight());
         }
     }
+
+
+    /**
+     * Prints the data values of this BST in a breadth-first manner.
+     */
     public void printBF() {
         int height = getHeight(this.root);
         for (int i = 1; i <= height; i++) {
@@ -133,6 +218,12 @@ public class BST {
         }
     }
 
+    /**
+     * A helper method to print the data values of the BST at the specified level.
+     *
+     * @param node the current node
+     * @param level the level to print the data values from
+     */
     private void printGivenLevel(TNode node, int level) {
         if (node == null) {
             return;
@@ -145,6 +236,12 @@ public class BST {
         }
     }
 
+    /**
+     * Returns the height of this BST.
+     *
+     * @param node the current node
+     * @return the height of the BST
+     */
     public int getHeight(TNode node) {
         if (node == null) {
             return 0;

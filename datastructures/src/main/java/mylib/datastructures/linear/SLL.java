@@ -97,17 +97,17 @@ public class SLL {
      * @throws IllegalArgumentException If the position is not valid.
      */
     public void insert(SNode node, int position) {
-        if (position <= 0 || position > size + 1) {
+        if (position < 0 || position > size) {
             throw new IllegalArgumentException("Invalid position");
         }
 
-        if (position == 1) {
+        if (position == 0) {
             insertHead(node);
-        } else if (position == size + 1) {
+        } else if (position == size) {
             insertTail(node);
         } else {
             SNode current = head;
-            for (int i = 1; i < position - 1; i++) {
+            for (int i = 1; i < position; i++) {
                 current = current.getNext();
             }
             node.setNext(current.getNext());
