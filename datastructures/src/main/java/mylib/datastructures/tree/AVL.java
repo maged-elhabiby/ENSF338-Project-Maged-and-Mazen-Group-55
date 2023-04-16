@@ -1,6 +1,11 @@
+
+
 package mylib.datastructures.tree;
 import mylib.datastructures.nodes.TNode;
 
+/**
+ * An AVL tree implementation extending the basic binary search tree (BST) class.
+ */
 public class AVL extends BST{
 
     /**

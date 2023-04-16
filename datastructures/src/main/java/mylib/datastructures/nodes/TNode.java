@@ -1,5 +1,8 @@
 package mylib.datastructures.nodes;
 
+/**
+ * A class representing a node in a tree data structure.
+ */ 
 public class TNode {
     private int data;
     private int balance;

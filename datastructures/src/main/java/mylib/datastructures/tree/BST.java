@@ -1,8 +1,10 @@
+
 package mylib.datastructures.tree;
-
-
 import mylib.datastructures.nodes.TNode;
 
+/**
+ * A class representing a binary search tree (BST) data structure.
+*/ 
 public class BST {
     private TNode root;
 
