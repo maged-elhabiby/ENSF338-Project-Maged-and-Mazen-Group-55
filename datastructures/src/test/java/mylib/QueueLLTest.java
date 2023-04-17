@@ -1,3 +1,9 @@
+/**
+@author Maged El Habiby <a
+href="mailto:maged.elhabiby@ucalgary.ca">maged.elhabiby@ucalgary.ca</a>
+@author Mazen El Habiby <a
+ href="mailto:mazen.elhabiby@ucalgary.ca">mazen.elhabiby@ucalgary.ca</a>
+ */
 package mylib;
 
 
