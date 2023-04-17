@@ -12,12 +12,14 @@ import mylib.datastructures.nodes.SNode;
  * A Queue data structure implementation using a Singly Linked List (SLL) as the underlying data structure.
  */
 public class QueueLL extends SLL{
+
     /**
      * Default constructor that initializes the queue with a null head object.
      */
     public QueueLL() {
         super();
     }
+
     /**
      * Overloaded constructor that creates a queue with the given head node.
      *
@@ -26,6 +28,7 @@ public class QueueLL extends SLL{
     public QueueLL(SNode head) {
         super(head);
     }
+
     /**
      * This method is overridden to prevent its misuse in the queue implementation.
      */
@@ -33,6 +36,7 @@ public class QueueLL extends SLL{
     public void insertHead(SNode node) {
         // Override with empty body to prevent misuse
     }
+
     /**
      * This method is overridden to prevent its misuse in the queue implementation.
      */
@@ -40,6 +44,7 @@ public class QueueLL extends SLL{
     public void insert(SNode node, int position) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the queue implementation.
      */
@@ -47,6 +52,7 @@ public class QueueLL extends SLL{
     public void sortedInsert(SNode node) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the queue implementation.
      */
@@ -54,6 +60,7 @@ public class QueueLL extends SLL{
     public void deleteTail() {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the queue implementation.
      */
@@ -61,6 +68,7 @@ public class QueueLL extends SLL{
     public void delete(SNode node) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the queue implementation.
      */
@@ -68,6 +76,7 @@ public class QueueLL extends SLL{
     public void sort() {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * Adds a new node to the tail of the queue.
      *
@@ -76,6 +85,7 @@ public class QueueLL extends SLL{
     public void enqueue(SNode node) {
         super.insertTail(node);
     }
+    
     /**
      * Removes and returns the head node from the queue.
      *
@@ -90,6 +100,7 @@ public class QueueLL extends SLL{
         super.deleteHead();
         return headNode;
     }
+    
     /**
      * Returns the head node of the queue without removing it.
      *

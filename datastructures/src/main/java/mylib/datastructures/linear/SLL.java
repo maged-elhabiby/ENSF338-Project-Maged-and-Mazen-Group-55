@@ -17,11 +17,11 @@ public class SLL {
     private SNode head;
     private SNode tail;
     private int size;
+
     /**
      * Default constructor.
      * Initializes an empty singly linked list.
      */
-
     public SLL() {
         this.head = null;
         this.tail = null;
@@ -68,6 +68,7 @@ public class SLL {
         }
         return current;
     }
+
     /**
      * Inserts a node at the head of the list.
      * @param node The node to be inserted.
@@ -82,6 +83,7 @@ public class SLL {
         }
         size++;
     }
+
     /**
      * Inserts a node at the tail of the list.
      * @param node The node to be inserted.
@@ -96,10 +98,11 @@ public class SLL {
         }
         size++;
     }
+
     /**
      * Inserts a node at a specified position in the list.
      * @param node The node to be inserted.
-     * @param position The position at which the node should be inserted (1-indexed).
+     * @param position The position at which the node should be inserted (0-indexed).
      * @throws IllegalArgumentException If the position is not valid.
      */
     public void insert(SNode node, int position) {
@@ -109,9 +112,11 @@ public class SLL {
 
         if (position == 0) {
             insertHead(node);
-        } else if (position == size) {
+        } 
+        else if (position == size) {
             insertTail(node);
-        } else {
+        } 
+        else {
             SNode current = head;
             for (int i = 1; i < position; i++) {
                 current = current.getNext();
@@ -121,6 +126,7 @@ public class SLL {
             size++;
         }
     }
+
     /**
      * Inserts a node into a sorted list while maintaining its sorted order.
      * If the list is not sorted, it will be sorted first.
@@ -168,6 +174,7 @@ public class SLL {
         }
         return null;
     }    
+
     /**
      * Deletes the head node of the list.
      * @throws IllegalStateException If the list is empty.
@@ -179,6 +186,7 @@ public class SLL {
         head = head.getNext();
         size--;
     }
+    
     /**
      * Deletes the tail node of the list.
      * @throws IllegalStateException If the list is empty.
@@ -192,6 +200,7 @@ public class SLL {
         tail = prev;
         size--;
     }
+
     /**
      * Deletes a specified node from the list.
      * @param node The node to be deleted.
@@ -216,6 +225,7 @@ public class SLL {
             size--;
         }
     }
+
     /**
      * Sorts the list in ascending order.
      */
@@ -261,6 +271,7 @@ public class SLL {
         }
         System.out.println();
     }
+    
     /**
      * Returns the number of nodes in the list.
      * @return The size of the list.

@@ -12,12 +12,14 @@ import mylib.datastructures.nodes.SNode;
  * A Stack data structure implementation using a Singly Linked List (SLL) as the underlying data structure.
  */
 public class StackLL extends SLL {
+    
     /**
      * Default constructor that initializes the stack with a null head object.
      */
     public StackLL() {
         super();
     }
+    
     /**
      * Overloaded constructor that creates a stack with the given head node.
      *
@@ -26,6 +28,7 @@ public class StackLL extends SLL {
     public StackLL(SNode head) {
         super(head);
     }
+
     /**
      * This method is overridden to prevent its misuse in the stack implementation.
      */
@@ -33,6 +36,7 @@ public class StackLL extends SLL {
     public void insertTail(SNode node) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the stack implementation.
      */
@@ -40,6 +44,7 @@ public class StackLL extends SLL {
     public void insert(SNode node, int position) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the stack implementation.
      */
@@ -47,6 +52,7 @@ public class StackLL extends SLL {
     public void sortedInsert(SNode node) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the stack implementation.
      */
@@ -54,6 +60,7 @@ public class StackLL extends SLL {
     public void deleteTail() {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the stack implementation.
      */
@@ -61,6 +68,7 @@ public class StackLL extends SLL {
     public void delete(SNode node) {
         // Override with empty body to prevent misuse
     }
+    
     /**
      * This method is overridden to prevent its misuse in the stack implementation.
      */
@@ -77,6 +85,7 @@ public class StackLL extends SLL {
     public void push(SNode node) {
         super.insertHead(node);
     }
+    
     /**
      * Removes and returns the top node from the stack.
      *
@@ -91,6 +100,7 @@ public class StackLL extends SLL {
         super.deleteHead();
         return headNode;
     }
+    
     /**
      * Returns the top node of the stack without removing it.
      *
