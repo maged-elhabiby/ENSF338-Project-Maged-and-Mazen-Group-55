@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: mylib.DLLTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in mylib.DLLTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in mylib.DLLTest
